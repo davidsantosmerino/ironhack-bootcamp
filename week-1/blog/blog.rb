@@ -3,10 +3,11 @@ require "colorize"
 
 class Blog
 
+  PAGE_SIZE = 3
+
   def initialize
     @posts = []
     @pages = []
-    @page_size = 3
     @current_page = 0
   end
 
@@ -15,7 +16,7 @@ class Blog
   end
 
   def slice_pages
-    @pages = @posts.each_slice(@page_size).to_a
+    @pages = @posts.each_slice(PAGE_SIZE).to_a
   end
 
   def publish_front_page
@@ -25,12 +26,20 @@ class Blog
   end
 
   def calculate_page action
-    if action == "next" && @current_page < @pages.length - 1
+    if action == "next" && !last_page?
       @current_page += 1
-    elsif action == "prev" && @current_page > 0
+    elsif action == "prev" && !first_page?
       @current_page -= 1
     end
     get_page 
+  end
+
+  def first_page?
+    @current_page <= 0
+  end
+
+  def last_page?
+    @current_page >= @pages.length - 1
   end
 
   def get_page_bar
