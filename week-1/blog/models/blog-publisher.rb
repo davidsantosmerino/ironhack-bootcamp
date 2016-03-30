@@ -28,13 +28,7 @@ class BlogPublisher
   end
 
   def turn_page action
-    #not working
-    #PAGINATION_ACTIONS[action.to_sym].try :call
-    if action == "next" && !last_page?
-      @current_page += 1
-    elsif action == "prev" && !first_page?
-      @current_page -= 1
-    end
+    PAGINATION_ACTIONS[action.to_sym].call
 
     page
   end
