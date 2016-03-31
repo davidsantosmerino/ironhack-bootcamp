@@ -8,7 +8,7 @@ class WordCount
   end
 
   def start
-    if ask_login
+    if login?
       ask_word_to_count
     else
       puts "Please type a correct user and password"
@@ -16,7 +16,7 @@ class WordCount
     end
   end
 
-  def ask_login
+  def login?
     puts "Username: "
     user = gets.chomp
     puts "Password: "
@@ -31,7 +31,7 @@ class WordCount
   end
 
   def word_count word
-    puts "Your word has #{word.length} characters"
+    puts "Your word has #{word.size} characters"
   end
 
 end
