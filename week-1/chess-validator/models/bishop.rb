@@ -7,7 +7,7 @@ class Bishop < Piece
   end
 
   def can_move? chessboard, start_position, end_position
-    if (start_position[0] - end_position[0]).abs == (start_position[1] - end_position[1]).abs 
+    if (start_position[:x] - end_position[:x]).abs == (start_position[:y] - end_position[:y]).abs
       path = chessboard.path_to start_position, end_position
 
       chessboard.is_an_empty_position?(end_position) &&

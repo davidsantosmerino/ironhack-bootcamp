@@ -16,18 +16,18 @@ class ChessBoard
 
   def path_to start_position, end_position
     path = []
-    x_positions = [start_position[0],end_position[0]]
-    y_positions = [start_position[1],end_position[1]]
-    if start_position[0] == end_position[0]
+    x_positions = [start_position[:x],end_position[:x]]
+    y_positions = [start_position[:y],end_position[:y]]
+    if start_position[:x] == end_position[:x]
       (x_positions.min .. x_positions.max).each do |x|
         (y_positions.min .. y_positions.max).each do |y|
-          path << [x,y]
+          path << {:x => x,:y => y}
         end
       end
     else
       (y_positions.min .. y_positions.max).each do |y|
         (x_positions.min .. x_positions.max ).each do |x|
-          path << [x,y]
+          path << {:x => x,:y => y}
         end
       end
     end
@@ -37,23 +37,23 @@ class ChessBoard
   end
 
   def move_piece piece, position
-    @board[position[0]][position[1]] = piece
+    @board[position[:x]][position[:y]] = piece
   end
 
   def remove_piece position
-    @board[position[0]][position[1]] = nil
+    @board[position[:x]][position[:y]] = nil
   end
 
   def get_piece_by_position position
-    @board[position[0]][position[1]]
+    @board[position[:x]][position[:y]]
   end
 
   def is_a_free_path? positions
-    !positions.any? {|position| @board[position[0]][position[1]] != nil}
+    !positions.any? {|position| @board[position[:x]][position[:y]] != nil}
   end
 
   def is_an_empty_position? position
-    @board[position[0]][position[1]] == nil
+    @board[position[:x]][position[:y]] == nil
   end
 
   def draw

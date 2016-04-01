@@ -5,7 +5,7 @@ class Piece
   end
 
   def piece_name
-    @color + self.class.to_s[0]
+    @color + self.class.to_s.first
   end
 
 end

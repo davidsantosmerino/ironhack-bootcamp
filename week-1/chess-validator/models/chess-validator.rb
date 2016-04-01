@@ -48,6 +48,10 @@ class ChessValidator
   end
 
   def movement_parser unparsed_movement
+    parsed = {
+      :x => 0,
+      :y => 0
+    }
     parsed_movement = [2]
     board_positions = {
       :a => 0,
@@ -67,9 +71,9 @@ class ChessValidator
       7.to_s.to_sym => 1,
       8.to_s.to_sym => 0
     }
-    parsed_movement[0] = board_positions[unparsed_movement[1].to_s.to_sym]
-    parsed_movement[1] =  board_positions[unparsed_movement[0].to_sym]
-    parsed_movement
+    parsed[:x] = board_positions[unparsed_movement[1].to_s.to_sym]
+    parsed[:y] =  board_positions[unparsed_movement[0].to_sym]
+    parsed
   end
 
 end
