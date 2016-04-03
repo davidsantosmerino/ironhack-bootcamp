@@ -1,4 +1,3 @@
-Dir["./models/*"].each {|file| require file }
 require "pry"
 
 class SixDegrees

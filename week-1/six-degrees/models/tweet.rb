@@ -1,5 +1,6 @@
 class Tweet
   attr_reader :author, :mentions
+
   def initialize author, message
     @author = author
     @message = message

@@ -1,6 +1,6 @@
 class TwitterFaker
 
-  def initialize file
+  def initialize file = "input.txt"
     @tweets = []
     parse_file file
   end

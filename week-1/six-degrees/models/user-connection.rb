@@ -1,5 +1,3 @@
-require "./models/twitter-faker"
-
 class UserConnection
   def initialize twitter, user_name
     @twitter = twitter
@@ -51,9 +49,7 @@ class UserConnection
     candidate_connections = []
     user_tweets = @twitter.get_tweets_by_user user_name
     user_tweets.each do |tweet|
-      tweet.mentions.each do |mention|
-        candidate_connections << mention
-      end
+      candidate_connections.push(*tweet.mentions)
     end
 
     candidate_connections.uniq
