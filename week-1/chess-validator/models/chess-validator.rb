@@ -23,7 +23,6 @@ class ChessValidator
     piece = @chessboard.get_piece_by_position start_position
     @chessboard.move_piece piece, end_position
     @chessboard.remove_piece start_position
-    # @chessboard.draw
   end
 
   def check_movement movement
@@ -33,7 +32,6 @@ class ChessValidator
     if piece
       if piece.can_move? @chessboard, start_position, end_position
         puts "LEGAL"
-        #make_movement piece, start_position, end_position
       else
         puts "ILLEGAL"
       end

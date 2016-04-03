@@ -16,24 +16,56 @@ class ChessBoard
 
   def path_to start_position, end_position
     path = []
-    x_positions = [start_position[:x],end_position[:x]]
-    y_positions = [start_position[:y],end_position[:y]]
-    if start_position[:x] == end_position[:x]
-      (x_positions.min .. x_positions.max).each do |x|
-        (y_positions.min .. y_positions.max).each do |y|
-          path << {:x => x,:y => y}
-        end
-      end
-    else
-      (y_positions.min .. y_positions.max).each do |y|
-        (x_positions.min .. x_positions.max ).each do |x|
-          path << {:x => x,:y => y}
-        end
-      end
+    x_positions = [start_position[:x], end_position[:x]]
+    y_positions = [start_position[:y], end_position[:y]]
+    if is_vertical_movement? start_position, end_position
+      path = vertical_path x_positions, y_positions
+    elsif is_horizontal_movement? start_position, end_position
+      path = horizontal_path x_positions, y_positions
+    elsif is_diagonal_movement? start_position, end_position
+      path = diagonal_path x_positions, y_positions
     end
     path.delete start_position
-
     path
+  end
+
+  def vertical_path x_positions, y_positions
+    path = []
+    (x_positions.min .. x_positions.max).each do |x|
+      (y_positions.min .. y_positions.max).each do |y|
+        path << {:x => x,:y => y}
+      end
+    end
+    path
+  end
+
+  def horizontal_path x_positions, y_positions
+    path = []
+    (y_positions.min .. y_positions.max).each do |y|
+      (x_positions.min .. x_positions.max ).each do |x|
+        path << {:x => x,:y => y}
+      end
+    end
+    path
+  end
+
+  def diagonal_path x_positions, y_positions
+    path = []
+      #Diagonal path
+    path
+  end
+
+  def is_horizontal_movement? start_position, end_position
+    start_position[:y] == end_position[:y]
+  end
+
+  def is_vertical_movement? start_position, end_position
+    start_position[:x] == end_position[:x]
+  end
+
+  def is_diagonal_movement? start_position, end_position
+    (start_position[:x] - end_position[:x]).abs ==
+    (start_position[:y] - end_position[:y]).abs
   end
 
   def move_piece piece, position
