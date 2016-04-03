@@ -1,3 +1,8 @@
+require './.config/twitter-config'
+
 class Twitter
-  #Everything to connect with real twitter
+  def initialize
+    @client = TwitterConfig.config
+  end
+
 end
