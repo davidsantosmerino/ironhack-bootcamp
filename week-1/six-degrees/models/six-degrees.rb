@@ -50,7 +50,9 @@ class SixDegrees
   end
 
   def user_connections
-    user_connection = UserConnection.new @users, @tweets
+    @users.each do |user|
+      user.search_connections @tweets
+    end
   end
 
 end
