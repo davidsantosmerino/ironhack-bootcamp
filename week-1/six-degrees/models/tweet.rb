@@ -1,7 +1,7 @@
 class Tweet
-  attr_reader :user, :mentions
-  def initialize user, message
-    @user = user
+  attr_reader :author, :mentions
+  def initialize author, message
+    @author = author
     @message = message
     @mentions = get_mentions
   end
@@ -11,10 +11,6 @@ class Tweet
     raw_mentions = @message.scan starting_with_at
 
     raw_mentions.map { |mention| mention.gsub(/\@/, '')  }
-  end
-
-  def show
-    puts "@ #{@user.name} => #{@message} cc/#{@mentions}"
   end
 
 end

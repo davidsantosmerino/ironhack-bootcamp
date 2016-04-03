@@ -1,12 +1,22 @@
+require "./models/twitter-faker"
+
 class UserConnection
-  def initialize user_name, tweets
+  def initialize twitter, user_name
+    @twitter = twitter
     @user_name = user_name
-    @tweets = tweets
     @connections = [[],[],[],[],[],[]]
-    get_all_connections
+    get_six_connections
   end
 
-  def get_all_connections
+  def show_connections
+    puts @user_name
+    @connections.each do |connection|
+      puts connection.join ", "
+    end
+  end
+
+  private
+  def get_six_connections
     for i in 0..5
       if i == 0
         @connections[i] = get_direct_connections @user_name
@@ -15,7 +25,7 @@ class UserConnection
         previous_level.each do |previous_connection|
           new_connections = get_direct_connections previous_connection
           new_connections.each do |new_connection|
-            if @user_name != new_connection && !@connections.any? { |connection| connection.include? new_connection  }
+            if is_a_new_connection? new_connection
               @connections[i]  << new_connection
             end
           end
@@ -39,7 +49,7 @@ class UserConnection
 
   def search_candidate_connections user_name
     candidate_connections = []
-    user_tweets = get_tweets_by_user user_name
+    user_tweets = @twitter.get_tweets_by_user user_name
     user_tweets.each do |tweet|
       tweet.mentions.each do |mention|
         candidate_connections << mention
@@ -50,23 +60,16 @@ class UserConnection
   end
 
   def has_any_mention? candidate, user_name
-    tweets = get_tweets_by_user candidate
+    tweets = @twitter.get_tweets_by_user candidate
 
     tweets.any? do |tweet|
       tweet.mentions.include? user_name
     end
   end
 
-  def get_tweets_by_user user_name
-    @tweets.select { |tweet| tweet.user.name == user_name  }
-  end
-
-  def show_connections
-    puts @user_name
-    puts "---------------"
-    @connections.each do |connection|
-      puts connection.join ", "
-    end
+  def is_a_new_connection? new_connection
+    @user_name != new_connection &&
+    !@connections.any? { |connection| connection.include? new_connection  }
   end
 
 end
