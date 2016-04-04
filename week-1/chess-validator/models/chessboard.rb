@@ -51,7 +51,12 @@ class ChessBoard
 
   def diagonal_path x_positions, y_positions
     path = []
-      #Diagonal path
+    x_min = x_positions.min
+    distance = x_positions.max - x_positions.min - 1
+    y_min = y_positions.min
+    1.upto(distance) do |increment|
+      path << {:x => x_min + increment , :y => y_min + increment }
+    end
     path
   end
 

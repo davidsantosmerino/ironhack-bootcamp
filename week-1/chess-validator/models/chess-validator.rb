@@ -16,7 +16,7 @@ class ChessValidator
   def get_movements
     movements_file = "movements.txt"
     raw_movements = IO.readlines movements_file
-    @movements = raw_movements.map { |movement| movement.split " " }
+    @movements = raw_movements.map { |movement| movement.split }
   end
 
   def make_movement piece, start_position, end_position
