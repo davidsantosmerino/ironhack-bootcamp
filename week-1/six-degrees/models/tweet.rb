@@ -1,13 +1,12 @@
 class Tweet
-  attr_reader :author, :mentions
+  attr_reader :author
 
   def initialize author, message
     @author = author
     @message = message
-    @mentions = get_mentions
   end
 
-  def get_mentions
+  def mentions
     starting_with_at = /@\w+/
     raw_mentions = @message.scan starting_with_at
 

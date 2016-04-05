@@ -46,6 +46,7 @@ class UserConnection
   end
 
   def search_candidate_connections user_name
+    puts user_name
     candidate_connections = []
     user_tweets = @twitter.get_tweets_by_user user_name
     user_tweets.each do |tweet|
@@ -56,6 +57,7 @@ class UserConnection
   end
 
   def has_any_mention? candidate, user_name
+    puts "Checking #{candidate}..."
     tweets = @twitter.get_tweets_by_user candidate
 
     tweets.any? do |tweet|
