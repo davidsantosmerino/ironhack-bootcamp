@@ -24,7 +24,7 @@ class UserConnection
           new_connections = get_direct_connections previous_connection
           new_connections.each do |new_connection|
             if is_a_new_connection? new_connection
-              @connections[i]  << new_connection
+              @connections[i] << new_connection
             end
           end
         end
