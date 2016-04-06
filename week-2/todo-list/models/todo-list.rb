@@ -1,11 +1,10 @@
 require_relative 'todo-list-store'
 
 class TodoList
-    attr_reader :user_name,:tasks,:store
+    attr_reader :user_name,:tasks
 
     def initialize user_name
        @user_name = user_name
-       @tasks = []
     end
 
     def add_task task
@@ -19,6 +18,14 @@ class TodoList
     def find_task_by_id id
       index = @tasks.index {|task| task.id == id }
       return @tasks[index] unless index.nil?
+    end
+
+    def pending_tasks
+      @tasks.select {|task| not task.complete?}
+    end
+
+    def completed_tasks
+      @tasks.select {|task| task.complete?}
     end
 
     def sort_by_created direction

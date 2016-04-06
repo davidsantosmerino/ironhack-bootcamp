@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <title>Taks | ToDo app</title>
+</head>
+<body>
+  <h1>My tasks <a href="/new_task">+</a></h1>
+  <hr>
+  <% if @action %>
+  <em>Your task has been <%= @action %></em>
+  <% end %>
+  <h3>Pending</h3>
+  <ul>
+  <% @pending_tasks.each do |task| %>
+    <li><%= task.content %><a href="/complete_task/<%= task.id %>">done</a></li>
+  <% end %>
+  </ul>
+  <h3>Completed</h3>
+  <ul>
+  <% @completed_tasks.each do |task| %>
+    <li><strike><%= task.content %></strike><a href="/delete_task/<%= task.id %>">delete</a></li>
+  <% end %>
+  </ul>
+</body>
+</html>
