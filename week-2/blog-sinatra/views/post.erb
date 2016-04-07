@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+<head>
+  <title>Post <%= @post.title %> | Blog</title>
+</head>
+<body>
+  <h1><%= @post.title %></h1>
+  <em><%= @post.author %> /  <%= @post.category %></em>
+  <em><%= @post.date.strftime("%d/%m/%Y") %></em>
+  <hr>
+  <p><%= @post.text %></p>
+</body>
+</html>
