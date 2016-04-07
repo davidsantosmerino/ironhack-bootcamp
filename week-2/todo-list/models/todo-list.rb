@@ -5,6 +5,7 @@ class TodoList
 
     def initialize user_name
        @user_name = user_name
+       @tasks = []
     end
 
     def add_task task

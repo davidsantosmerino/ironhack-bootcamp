@@ -1,7 +1,7 @@
 require 'yaml/store'
 
 module TodoListStore
-  YML_PATH = "public/tasks.yml"
+  YML_PATH = "tasks.yml"
   @tasks_store = YAML::Store.new(YML_PATH)
 
   def self.save user_name, tasks

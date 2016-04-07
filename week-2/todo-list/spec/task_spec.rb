@@ -1,5 +1,5 @@
 require "rspec"
-require ".././models/task"
+require_relative "../models/task"
 
 describe Task do
   default_content = "task one"
