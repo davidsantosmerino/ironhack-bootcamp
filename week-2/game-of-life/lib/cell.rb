@@ -1,5 +1,3 @@
-require "pry"
-
 class Cell
   DEAD = 0
   ALIVE = 1

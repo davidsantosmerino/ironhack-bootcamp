@@ -16,7 +16,7 @@ class GameOfLife
   def populate_grid
     (0..@vertical_size-1).each do |y|
       (0..@horizontal_size-1).each do |x|
-        @grid[x][y] = rand(0..1) 
+        @grid[x][y] = rand(0..1)
       end
     end
   end
@@ -60,7 +60,7 @@ class GameOfLife
   def show_grid
     (0..@vertical_size-1).each do |y|
       (0..@horizontal_size-1).each do |x|
-        print @grid[x][y]
+        print "|#{@grid[x][y]}|"
       end
       print "\n"
     end
