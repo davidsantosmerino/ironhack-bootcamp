@@ -10,26 +10,36 @@ class Cell
   end
 
   def regenerate
-    case
-    when count_alive_neighbours < 2
-      @state = 0
-    when @state == 1 && (2 <= count_alive_neighbours && count_alive_neighbours <= 3)
-      @state = 1
-    when count_alive_neighbours == 3
-      @state = 1
-    when count_alive_neighbours > 3
-      @state = 0
+    case @state
+    when ALIVE
+        return DEAD if under_population? || overcrowding?
+    when DEAD
+        return ALIVE if reproduction?
     end
-    @state
+    return @state
+  end
+
+  def under_population?
+    is_alive? && count_alive_neighbours < 2
+  end
+
+  def reproduction?
+    is_dead? && count_alive_neighbours == 3
+  end
+
+  def overcrowding?
+    is_alive? && count_alive_neighbours > 3
+  end
+
+  def is_alive?
+    @state == ALIVE
+  end
+
+  def is_dead?
+    @state == DEAD
   end
 
   def count_alive_neighbours
-    @neighbours.reduce(0) do |sum, cell|
-      if cell == ALIVE
-        sum += 1
-      else
-        sum = sum
-      end
-    end
+    @count_alive_neighbours ||= @neighbours.reduce(0) {|sum, cell| sum += cell}
   end
 end
