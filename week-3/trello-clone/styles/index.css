@@ -1,0 +1,131 @@
+body {
+  background-image: url("https://trello-backgrounds.s3.amazonaws.com/53baf533e697a982248cd73f/4200x4200/48dbf0b5a546541e847e267a5dcd2201/shutterstock_134707556.jpg");
+}
+
+.body-cover{
+  background-size: cover;
+}
+
+nav ul {
+  padding: 0;
+}
+
+nav li {
+  float: left;
+  list-style-type: none;
+}
+
+nav li a {
+  display: inline-block;
+  margin-left: 15px;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+#login ul {
+  padding: 0;
+}
+
+#login li {
+  float: right;
+  list-style-type: none;
+}
+
+#login li a {
+  display: inline-block;
+  margin-right: 15px;
+  color: #FFFFFF;
+}
+
+.board-menu ul {
+  margin: 10px;
+  padding: 0;
+}
+
+.board-menu  li {
+  float: left;
+  list-style-type: none;
+}
+
+.board-menu  li a {
+  display: inline-block;
+  margin-left: 15px;
+  color: #FFFFFF;
+}
+
+.board-link {
+  padding-top: 15px;
+}
+
+.header-logo {
+  width: 80px;
+  height: 30px;
+  margin: 0 auto;
+  background-image: url(https://d78fikflryjgj.cloudfront.net/images/01ef898811a879595cea8ac3cd77a155/header-logo-2x.png);
+  background-size: 80px 30px;
+  opacity: 0.7;
+}
+
+.board-logo {
+  border-radius: 3px;
+  height: 30px;
+  width: 30px;
+}
+
+#suscribe-alert {
+  width: 100%;
+  height: 60px;
+  color: #3b372b;
+  text-align: center;
+  font-size: 1.2em;
+  margin-top: 5px;
+}
+
+#suscribe-alert a {
+  color: #847b62;
+}
+
+.card {
+  padding-top: 5px;
+  width: 280px;
+  margin-left: 10px;
+  background-color: #e2e4e6
+}
+
+.task {
+  background-color: #FFFFFF;
+  border-radius: 5px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  padding: 5px;
+  color: #4d4d4d;
+  margin-bottom: 5px;
+}
+
+.task:hover {
+  background-color: #EDEFF0;
+}
+
+.category-tag {
+  width: 40px;
+  height: 10px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.purple {
+  background-color: purple;
+}
+
+.green {
+  background-color: green;
+}
+
+.orange {
+  background-color: #ffab4a;
+}
+
+.translucid {
+  color:  white;
+  background: linear-gradient(to bottom,rgba(255,255,255,.3) 0,rgba(255,255,255,.2) 100%);
+}
