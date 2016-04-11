@@ -18,23 +18,15 @@ class Cell
   end
 
   def under_population?
-    is_alive? && count_alive_neighbours < 2
+    count_alive_neighbours < 2
   end
 
   def reproduction?
-    is_dead? && count_alive_neighbours == 3
+    count_alive_neighbours == 3
   end
 
   def overcrowding?
-    is_alive? && count_alive_neighbours > 3
-  end
-
-  def is_alive?
-    @state == ALIVE
-  end
-
-  def is_dead?
-    @state == DEAD
+    count_alive_neighbours > 3
   end
 
   def count_alive_neighbours
