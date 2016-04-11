@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+  <title>Play | Movie Lover</title>
+</head>
+<body>
+  <h1>Related films</h1>
+  <span>Score: <%=@score%></span>
+  <p><b>Question: </b> <%=@question%></p>
+  <ul>
+    <form action="/validate_answer" method="POST">
+      <% @movies.each_with_index do |movie, index| %>
+      <li>
+        <span><%=movie.title%></span><input type="radio" name="movie-id" value="<%=index%>">
+      </li>
+      <% end %>
+      <button type="submit">answer</button>
+    </form>
+  </ul>
+</body>
+</html>
