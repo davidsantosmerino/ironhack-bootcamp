@@ -1,38 +1,49 @@
 require_relative "cell"
 
 class GameOfLife
+  DEFAULT_WIDTH = 100
+  DEFAULT_HEIGHT = 100
 
-  def initialize horizontal_size, vertical_size
-    @horizontal_size = horizontal_size
-    @vertical_size = vertical_size
-    create_grid
+  def initialize steps, custom_grid = nil
+    @steps = steps
+    @grid = custom_grid
   end
 
-  def create_grid
-    @grid = Array.new(@vertical_size) { Array.new(@horizontal_size) }
-    populate_grid
+  def grid
+    @grid ||= random_grid
   end
 
-  def populate_grid
-    (0..@vertical_size-1).each do |y|
-      (0..@horizontal_size-1).each do |x|
-        @grid[x][y] = rand(0..1)
+  def width
+    @width ||= grid.first.size
+  end
+
+  def height
+    @height ||= grid.size
+  end
+
+  def random_grid
+    new_grid = Array.new(DEFAULT_HEIGHT) { Array.new(DEFAULT_WIDTH) }
+    (0..DEFAULT_HEIGHT-1).each do |y|
+      (0..DEFAULT_WIDTH-1).each do |x|
+        new_grid[x][y] = rand(0..1)
       end
     end
+
+    new_grid
   end
 
-  def simulate number_of_iterations
-    (0..number_of_iterations).each do |i|
+  def simulate
+    (0..@steps).each do |i|
       regenerate
       show_grid
     end
   end
 
   def regenerate
-    result_grid = Array.new(@vertical_size) { Array.new(@horizontal_size) }
-    (0..@vertical_size-1).each do |y|
-      (0..@horizontal_size-1).each do |x|
-        cell_status = @grid[x][y]
+    result_grid = Array.new(height) { Array.new(width) }
+    (0..height-1).each do |y|
+      (0..width-1).each do |x|
+        cell_status = grid[x][y]
         neighbours = neighbours x, y
         cell = Cell.new cell_status, neighbours
         result_grid[x][y] = cell.regenerate
@@ -47,8 +58,8 @@ class GameOfLife
       (-1..1).each do |y|
         x_position = cell_x + x
         y_position = cell_y + y
-        if (0 <= x_position && x_position < @horizontal_size) &&
-          (0 <= y_position && y_position < @vertical_size) &&
+        if (0 <= x_position && x_position < width) &&
+          (0 <= y_position && y_position < height) &&
           (x_position != cell_x || y_position != cell_y)
           neighbours << @grid[x_position][y_position]
         end
@@ -58,9 +69,14 @@ class GameOfLife
   end
 
   def show_grid
-    (0..@vertical_size-1).each do |y|
-      (0..@horizontal_size-1).each do |x|
-        print "|#{@grid[x][y]}|"
+    system "clear"
+    (0..height-1).each do |y|
+      (0..width-1).each do |x|
+        if grid[x][y] == 1
+          print " * "
+        else
+          print "   "
+        end
       end
       print "\n"
     end
