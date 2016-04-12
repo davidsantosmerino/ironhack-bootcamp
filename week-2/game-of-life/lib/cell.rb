@@ -1,7 +1,6 @@
-class Cell
-  DEAD = 0
-  ALIVE = 1
+require_relative "constants"
 
+class Cell
   def initialize(state, neighbours)
     @state = state
     @neighbours = neighbours
@@ -9,10 +8,10 @@ class Cell
 
   def regenerate
     case @state
-    when ALIVE
-        return DEAD if under_population? || overcrowding?
-    when DEAD
-        return ALIVE if reproduction?
+    when Constants.alive
+        return Constants.dead if under_population? || overcrowding?
+    when Constants.dead
+        return Constants.alive if reproduction?
     end
     return @state
   end

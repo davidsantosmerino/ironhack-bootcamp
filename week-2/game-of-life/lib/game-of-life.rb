@@ -1,8 +1,12 @@
+require_relative "constants"
 require_relative "cell"
 
 class GameOfLife
-  DEFAULT_WIDTH = 100
-  DEFAULT_HEIGHT = 100
+  DEFAULT_WIDTH = 20
+  DEFAULT_HEIGHT = 20
+  LINE_BREAK = "\n"
+  ALIVE_PRINT = " * "
+  DEAD_PRINT = "   "
 
   def initialize steps, custom_grid = nil
     @steps = steps
@@ -49,6 +53,7 @@ class GameOfLife
         result_grid[x][y] = cell.regenerate
       end
     end
+
     @grid = result_grid
   end
 
@@ -58,29 +63,45 @@ class GameOfLife
       (-1..1).each do |y|
         x_position = cell_x + x
         y_position = cell_y + y
-        if (0 <= x_position && x_position < width) &&
-          (0 <= y_position && y_position < height) &&
-          (x_position != cell_x || y_position != cell_y)
+        if valid_position? cell_x, cell_y, x_position, y_position
           neighbours << @grid[x_position][y_position]
         end
       end
     end
+
     neighbours
+  end
+
+  def valid_position? cell_x, cell_y, x_position, y_position
+    valid_x_position?(x_position) &&
+    valid_y_position?(y_position) &&
+    no_self_cell?(cell_x, cell_y, x_position, y_position)
+  end
+
+  def no_self_cell? cell_x, cell_y, x_position, y_position
+    (x_position != cell_x || y_position != cell_y)
+  end
+
+  def valid_x_position? x_position
+    0 <= x_position && x_position < width
+  end
+
+  def valid_y_position? y_position
+    0 <= y_position && y_position < height
   end
 
   def show_grid
     system "clear"
     (0..height-1).each do |y|
       (0..width-1).each do |x|
-        if grid[x][y] == 1
-          print " * "
+        if grid[x][y] == Constants.alive
+          print ALIVE_PRINT
         else
-          print "   "
+          print DEAD_PRINT
         end
       end
-      print "\n"
+      print LINE_BREAK
     end
-    print "\n"
+    print LINE_BREAK
   end
-
 end
