@@ -9,17 +9,10 @@ var Utils = {
       saxons.push(new Saxon());
     }
     return saxons;
-  }
-};
-
-var Viking = function (name, health, strength) {
-  this.alive = true;
-  this.name = name;
-  this.health = health;
-  this.strength = strength;
-  this.attack = function(enemy) {
-    enemy.health -= this.strength;
-    console.log(this.name + " attacks " + enemy.name);
+  },
+  attackSomeone: function (self, enemy) {
+    enemy.health -= self.strength;
+    console.log(self.name + " attacks " + enemy.name);
     if(enemy.health <= 0){
       enemy.alive = false;
       console.log(enemy.name + " dies");
@@ -27,6 +20,31 @@ var Viking = function (name, health, strength) {
     else{
       console.log(enemy.name + " health: " + enemy.health);
     }
+  }
+};
+
+var Side = function (name, members){
+  this.name = name;
+  this.members = members;
+  this.initialMembers = members.length;
+  this.getRandomFighterIndex = function() {
+    return Utils.randomNumber(0, this.members.length);
+  }
+  this.removeADied = function(index){
+    this.members.splice(index, 1);
+  }
+  this.summary = function() {
+    console.log( this.members.length + " / " + this.initialMembers + " of " + this.name)
+  }
+}
+
+var Viking = function (name, health, strength) {
+  this.alive = true;
+  this.name = name;
+  this.health = health;
+  this.strength = strength;
+  this.attack = function(enemy) {
+    Utils.attackSomeone(this, enemy);
   }
 };
 
@@ -40,15 +58,7 @@ var Saxon = function () {
   this.health = Utils.randomNumber(min_health,max_health);
   this.strength = Utils.randomNumber(min_strength, max_strength);
   this.attack = function(enemy) {
-    enemy.health -= this.strength;
-    console.log(this.name + " attacks " + enemy.name);
-    if(enemy.health <= 0){
-      enemy.alive = false;
-      console.log(enemy.name + " dies");
-    }
-    else{
-      console.log(enemy.name + " health: " + enemy.health);
-    }
+    Utils.attackSomeone(this, enemy);
   }
 };
 
@@ -77,31 +87,32 @@ var VikingPit = function (vikings) {
 var Assault = function(vikings){
   var min_turns = 5;
   var max_turns = 8;
-  this.saxons = Utils.generateSaxons();
-  this.vikings = vikings;
+  this.saxonsSide = new Side("Saxons",Utils.generateSaxons());
+  this.vikingsSide = new Side("Vikings",vikings);
   this.currentTurn = 0;
   this.turns = Utils.randomNumber(min_turns, max_turns);
   this.nextTurn = function(){
-    var saxonIndex = Utils.randomNumber(0, this.saxons.length);
-    var vikingIndex = Utils.randomNumber(0, this.vikings.length);
+    var saxonIndex = this.saxonsSide.getRandomFighterIndex();
+    var vikingIndex = this.vikingsSide.getRandomFighterIndex();
     if(this.currentTurn < this.turns
-      && this.vikings.length > 0
-      && this.saxons.length > 0){
-      this.vikings[vikingIndex].attack(this.saxons[saxonIndex]);
-      if(!this.saxons[saxonIndex].alive){
-        this.saxons.splice(saxonIndex, 1);
+      && this.vikingsSide.members.length > 0
+      && this.saxonsSide.members.length > 0){
+      this.vikingsSide.members[vikingIndex].attack(this.saxonsSide.members[saxonIndex]);
+      if(!this.saxonsSide.members[saxonIndex].alive){
+        this.saxonsSide.removeADied(saxonIndex);
       }
       else{
-        this.saxons[saxonIndex].attack(vikings[vikingIndex]);
-        if(!this.vikings[vikingIndex].alive)
-          this.vikings.splice(vikingIndex, 1);
+        this.saxonsSide.members[saxonIndex].attack(this.vikingsSide.members[vikingIndex]);
+        if(!this.vikingsSide.members[vikingIndex].alive){
+          this.vikingsSide.removeADied(vikingIndex);
+        }
       }
       this.currentTurn++;
     }
     else {
       console.log("The asssault has finished!");
-      console.log("Vikings alive: " + this.vikings.length );
-      console.log("Saxons alive: " + this.saxons.length );
+      this.vikingsSide.summary();
+      this.saxonsSide.summary();
     }
   }
 }
