@@ -46,7 +46,10 @@ var Side = function (name, members){
     this.members.splice(index, 1);
   }
   this.casualtiesPercentage = function(){
-    return (this.members.length / this.initialMembers) * 100;
+    return Math.round((this.members.length / this.initialMembers) * 100);
+  }
+  this.summary = function(){
+    return this.casualtiesPercentage() + "% of " + this.name + " still alive";
   }
 }
 
@@ -146,6 +149,8 @@ var Assault = function(vikings){
     else {
       this.gameOver = true;
       console.log("The assault has finished!");
+      console.log(this.vikingsSide.summary());
+      console.log(this.saxonsSide.summary());
       console.log(this.winner([this.saxonsSide,this.vikingsSide]).name + " win!");
     }
   }
