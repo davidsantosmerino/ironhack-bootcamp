@@ -54,8 +54,8 @@ var Viking = function (name, health, strength) {
 var Saxon = function () {
   var min_health = 10;
   var max_health = 40;
-  var min_strength = 2;
-  var max_strength = 8;
+  var min_strength = 6;
+  var max_strength = 14;
   this.alive = true;
   this.name = "a saxon";
   this.health = Utils.randomNumber(min_health,max_health);
@@ -87,6 +87,11 @@ var VikingPit = function (vikings) {
       console.log("Stop!!! Stop!!! This is just a preparation!");
     }
   }
+  this.simulate = function() {
+    while(!this.gameOver){
+      this.nextTurn();
+    }
+  }
 };
 
 var Assault = function(vikings){
@@ -98,7 +103,10 @@ var Assault = function(vikings){
   this.currentTurn = 0;
   this.turns = Utils.randomNumber(min_turns, max_turns);
   this.winner = function(sides){
-    var sorted = sides.sort(function(a, b){return b.casualtiesPercentage()-a.casualtiesPercentage()});
+    var sorted = sides.sort(
+      function(a, b){
+        return b.casualtiesPercentage()-a.casualtiesPercentage();
+      });
     return sorted[0];
   }
   this.nextTurn = function(){
@@ -122,22 +130,22 @@ var Assault = function(vikings){
     else {
       this.gameOver = true;
       console.log("The asssault has finished!");
-      console.log(this.vikingsSide.summary());
-      console.log(this.saxonsSide.summary());
       console.log(this.winner([this.saxonsSide,this.vikingsSide]).name + " won!");
+    }
+  }
+  this.simulate = function() {
+    while(!this.gameOver){
+      this.nextTurn();
     }
   }
 }
 
-var Game = function (battle) {
-  this.battle  = battle;
-  this.nextTurn = function(){
-    return this.battle.nextTurn();
-  }
-  this.fight = function() {
-    while(!this.battle.gameOver){
-      this.nextTurn();
-    }
+var Game = function (battles) {
+  this.battles  = battles;
+  this.simulate = function(){
+    battles.forEach(function(battle){
+      battle.simulate();
+    });
   }
 }
 
@@ -148,5 +156,5 @@ var matias = new Viking("Matias",70,13);
 var vikings = [david, oriol, charlie, matias];
 var vikingPit = new VikingPit(vikings);
 var assault = new Assault(vikings);
-var game = new Game(assault);
-game.fight()
+var game = new Game([vikingPit,assault]);
+game.simulate();
