@@ -33,6 +33,9 @@ var Side = function (name, members){
   this.removeADied = function(index){
     this.members.splice(index, 1);
   }
+  this.casualtiesPercentage = function(){
+    return (this.members.length / this.initialMembers) * 100;
+  }
   this.summary = function() {
     return this.members.length + " / " + this.initialMembers + " of " + this.name;
   }
@@ -94,6 +97,10 @@ var Assault = function(vikings){
   this.vikingsSide = new Side("Vikings",vikings);
   this.currentTurn = 0;
   this.turns = Utils.randomNumber(min_turns, max_turns);
+  this.winner = function(sides){
+    var sorted = sides.sort(function(a, b){return b.casualtiesPercentage()-a.casualtiesPercentage()});
+    return sorted[0];
+  }
   this.nextTurn = function(){
     var saxonIndex = this.saxonsSide.getRandomFighterIndex();
     var vikingIndex = this.vikingsSide.getRandomFighterIndex();
@@ -117,6 +124,7 @@ var Assault = function(vikings){
       console.log("The asssault has finished!");
       console.log(this.vikingsSide.summary());
       console.log(this.saxonsSide.summary());
+      console.log(this.winner([this.saxonsSide,this.vikingsSide]).name + " won!");
     }
   }
 }
