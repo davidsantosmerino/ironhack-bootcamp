@@ -20,6 +20,18 @@ var Utils = {
     else{
       console.log(enemy.name + " health: " + enemy.health);
     }
+  },
+  generateRandomWarCry: function(){
+    var warCries = [
+      "This is a good day for someone else to die!",
+      "I'll feed your head to my dogs!",
+      "It's clobberin' time!",
+      "Entaro Tassadar!",
+      "Al turróoooooon!",
+      "Death and Glory!",
+    ];
+    var randomIndex = Utils.randomNumber(0,warCries.length);
+    return warCries[randomIndex];
   }
 };
 
@@ -36,9 +48,6 @@ var Side = function (name, members){
   this.casualtiesPercentage = function(){
     return (this.members.length / this.initialMembers) * 100;
   }
-  this.summary = function() {
-    return this.members.length + " / " + this.initialMembers + " of " + this.name;
-  }
 }
 
 var Viking = function (name, health, strength) {
@@ -46,6 +55,7 @@ var Viking = function (name, health, strength) {
   this.name = name;
   this.health = health;
   this.strength = strength;
+  this.warCry = Utils.generateRandomWarCry();
   this.attack = function(enemy) {
     Utils.attackSomeone(this, enemy);
   }
@@ -98,16 +108,22 @@ var Assault = function(vikings){
   var min_turns = 5;
   var max_turns = 8;
   this.gameOver = false;
-  this.saxonsSide = new Side("Saxons",Utils.generateSaxons());
-  this.vikingsSide = new Side("Vikings",vikings);
-  this.currentTurn = 0;
-  this.turns = Utils.randomNumber(min_turns, max_turns);
   this.winner = function(sides){
     var sorted = sides.sort(
       function(a, b){
         return b.casualtiesPercentage()-a.casualtiesPercentage();
       });
     return sorted[0];
+  }
+  this.saxonsSide = new Side("Saxons",Utils.generateSaxons());
+  this.vikingsSide = new Side("Vikings",vikings);
+  this.currentTurn = 0;
+  this.turns = Utils.randomNumber(min_turns, max_turns);
+  this.vikingsShouts = function(){
+    console.log("The real battle starts now!!!");
+    this.vikingsSide.members.forEach(function(viking){
+      console.log(viking.name +": '" + viking.warCry + "'");
+    });
   }
   this.nextTurn = function(){
     var saxonIndex = this.saxonsSide.getRandomFighterIndex();
@@ -129,11 +145,12 @@ var Assault = function(vikings){
     }
     else {
       this.gameOver = true;
-      console.log("The asssault has finished!");
-      console.log(this.winner([this.saxonsSide,this.vikingsSide]).name + " won!");
+      console.log("The assault has finished!");
+      console.log(this.winner([this.saxonsSide,this.vikingsSide]).name + " win!");
     }
   }
   this.simulate = function() {
+    this.vikingsShouts();
     while(!this.gameOver){
       this.nextTurn();
     }
