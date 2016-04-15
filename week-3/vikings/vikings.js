@@ -34,7 +34,7 @@ var Side = function (name, members){
     this.members.splice(index, 1);
   }
   this.summary = function() {
-    console.log( this.members.length + " / " + this.initialMembers + " of " + this.name)
+    return this.members.length + " / " + this.initialMembers + " of " + this.name;
   }
 }
 
@@ -52,7 +52,7 @@ var Saxon = function () {
   var min_health = 10;
   var max_health = 40;
   var min_strength = 2;
-  var max_strength = 5;
+  var max_strength = 8;
   this.alive = true;
   this.name = "a saxon";
   this.health = Utils.randomNumber(min_health,max_health);
@@ -65,6 +65,7 @@ var Saxon = function () {
 var VikingPit = function (vikings) {
   var min_turns = 5;
   var max_turns = 8;
+  this.gameOver = false;
   this.vikings = vikings;
   this.currentTurn = 0;
   this.turns = Utils.randomNumber(min_turns, max_turns)
@@ -79,6 +80,7 @@ var VikingPit = function (vikings) {
       this.currentTurn++;
     }
     else {
+      this.gameOver = true;
       console.log("Stop!!! Stop!!! This is just a preparation!");
     }
   }
@@ -87,6 +89,7 @@ var VikingPit = function (vikings) {
 var Assault = function(vikings){
   var min_turns = 5;
   var max_turns = 8;
+  this.gameOver = false;
   this.saxonsSide = new Side("Saxons",Utils.generateSaxons());
   this.vikingsSide = new Side("Vikings",vikings);
   this.currentTurn = 0;
@@ -110,9 +113,10 @@ var Assault = function(vikings){
       this.currentTurn++;
     }
     else {
+      this.gameOver = true;
       console.log("The asssault has finished!");
-      this.vikingsSide.summary();
-      this.saxonsSide.summary();
+      console.log(this.vikingsSide.summary());
+      console.log(this.saxonsSide.summary());
     }
   }
 }
@@ -120,13 +124,21 @@ var Assault = function(vikings){
 var Game = function (battle) {
   this.battle  = battle;
   this.nextTurn = function(){
-    this.battle.nextTurn();
+    return this.battle.nextTurn();
+  }
+  this.fight = function() {
+    while(!this.battle.gameOver){
+      this.nextTurn();
     }
   }
+}
 
 var david = new Viking("David",100,10);
 var oriol = new Viking("Oriol",90,12);
-var vikings = [david, oriol];
+var charlie = new Viking("Charlie",50,22);
+var matias = new Viking("Matias",70,13);
+var vikings = [david, oriol, charlie, matias];
 var vikingPit = new VikingPit(vikings);
 var assault = new Assault(vikings);
 var game = new Game(assault);
+game.fight()
