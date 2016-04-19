@@ -1,0 +1,6 @@
+<h3><%=@contact.name%></h3>
+<%= image_tag @contact.avatar.url(:medium) %>
+<p><strong>address: </strong><%=@contact.address%></p>
+<p><strong>phone: </strong><%=@contact.phone%></p>
+<p><strong>email: </strong><%=@contact.email%></p>
+<a href="/contacts">back</a>

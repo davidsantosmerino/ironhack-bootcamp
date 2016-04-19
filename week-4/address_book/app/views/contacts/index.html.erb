@@ -7,8 +7,7 @@
 </form>
 <ul>
   <% @contacts.each do |contact| %>
-    <li><p><%=contact.name%></p>
-      <%= image_tag contact.avatar.url(:thumb) %>
+    <li><span><a href="/contacts/detail/<%=contact.id%>"><%=contact.name%></span>
       <a href="/contacts/fav/<%=contact.id%>"><%=contact.fav ? "remove" : "fav"%></a>
     </li>
   <% end %>

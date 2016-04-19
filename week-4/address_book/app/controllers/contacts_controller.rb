@@ -32,12 +32,18 @@ class ContactsController < ApplicationController
     render "search"
   end
 
+  def detail
+    id = params[:id]
+    @contact = Contact.find_by(id: id)
+    render "detail"
+  end
+
   def mark_as_fav
     id = params[:id]
     contact = Contact.find_by(id: id)
     contact.fav = contact.fav.nil? ? true : !contact.fav
     if contact.save
-      notice = "#{contact.name} is a fav contact now"
+      notice = contact.fav ? "#{contact.name} is a fav contact now" : "#{contact.name} is not a fav contact more"
     else
       notice = "Oops, something went wrong..."
     end
