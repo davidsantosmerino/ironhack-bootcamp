@@ -1,0 +1,15 @@
+<h1>Contacts</h1>
+<p><em><%=@notice%></em></p>
+<a href="/contacts/new">Add more</a>
+<form action="/contacts/search" method="GET">
+  <input type="text" name="search[q]" placeholder="Type a contact name...">
+  <button type="submit">search</button>
+</form>
+<ul>
+  <% @contacts.each do |contact| %>
+    <li><p><%=contact.name%></p>
+      <%= image_tag contact.avatar.url(:thumb) %>
+      <a href="/contacts/fav/<%=contact.id%>"><%=contact.fav ? "remove" : "fav"%></a>
+    </li>
+  <% end %>
+</ul>

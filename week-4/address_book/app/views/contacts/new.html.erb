@@ -1,0 +1,38 @@
+<h1>Add a new contact</h1>
+<%if @notice %>
+  <ul>
+    <%@notice.each do |error|%>
+      <li><%=error%></li>
+    <%end%>
+  </ul>
+<%end%>
+<%= form_for @contact, url: "/contacts/create", html: { multipart: true } do |form| %>
+  <div>
+    <label for="contact_name">Name</label>
+    <input type="text" name="contact[name]" id="contact_name">
+  </div>
+
+  <div>
+    <label for="contact_avatar">Avatar</label>
+    <%= form.file_field :avatar %>
+  </div>
+
+  <div>
+    <label for="contact_address">Address</label>
+    <textarea name="contact[address]" id="contact_address"></textarea>
+  </div>
+
+  <div>
+    <label for="contact_phone">Phone number</label>
+    <input type="tel" name="contact[phone]" id="contact_phone">
+  </div>
+
+  <div>
+    <label for="contact_email">Email</label>
+    <input type="email" name="contact[email]" id="contact_email">
+  </div>
+  <input type="hidden" name="authenticity_token"
+     value="<%= form_authenticity_token %>">
+
+  <button type="submit">Add this contact</button>
+<% end %>
