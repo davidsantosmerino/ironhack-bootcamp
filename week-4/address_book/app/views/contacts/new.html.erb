@@ -6,33 +6,32 @@
     <%end%>
   </ul>
 <%end%>
-<%= form_for @contact, url: "/contacts/create", html: { multipart: true } do |form| %>
+<%= form_for @contact, url: "/contacts/create", html: { multipart: true } do |f| %>
   <div>
-    <label for="contact_name">Name</label>
-    <input type="text" name="contact[name]" id="contact_name">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
   </div>
 
   <div>
-    <label for="contact_avatar">Avatar</label>
-    <%= form.file_field :avatar %>
+    <%= f.label :avatar %>
+    <%= f.file_field :avatar %>
   </div>
 
   <div>
-    <label for="contact_address">Address</label>
-    <textarea name="contact[address]" id="contact_address"></textarea>
+    <%= f.label :address %>
+    <%= f.text_area :address %>
   </div>
 
   <div>
-    <label for="contact_phone">Phone number</label>
-    <input type="tel" name="contact[phone]" id="contact_phone">
+    <%= f.label :phone %>
+    <%= f.text_field :phone %>
   </div>
 
   <div>
-    <label for="contact_email">Email</label>
-    <input type="email" name="contact[email]" id="contact_email">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
   </div>
-  <input type="hidden" name="authenticity_token"
-     value="<%= form_authenticity_token %>">
 
-  <button type="submit">Add this contact</button>
+  <%= f.submit "add contact" %>
+
 <% end %>

@@ -43,7 +43,7 @@ class ContactsController < ApplicationController
     contact = Contact.find_by(id: id)
     contact.fav = contact.fav.nil? ? true : !contact.fav
     if contact.save
-      notice = contact.fav ? "#{contact.name} is a fav contact now" : "#{contact.name} is not a fav contact more"
+      notice = contact.fav ? "#{contact.name} is a fav contact now" : "#{contact.name} isn't a fav contact more"
     else
       notice = "Oops, something went wrong..."
     end
