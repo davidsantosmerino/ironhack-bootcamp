@@ -1,15 +1,13 @@
 Rails.application.routes.draw do
 
-  get "/" => "site#home"
+  get "/" => "projects#index"
 
-  get "/projects" => "projects#index"
+  get "/projects/:id" => "projects#show"
 
-  get "/contact" => "site#contact"
+  get "/projects/:project_id/time_entries" => "time_entry#index"
 
-  get "/say_name/:name" => "site#say_name"
+  get "/new" => "projects#new"
 
-  get "/calculator" => "site#calculator"
-
-  post "/calculate" => "site#calculate"
+  post "/projects" => "projects#create"
 
 end

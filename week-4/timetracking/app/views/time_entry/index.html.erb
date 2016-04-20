@@ -1,0 +1,7 @@
+<h1><%=@project.name%></h1>
+<p><%=@project.description%></p>
+<ul>
+  <%@entries.each do |time_entry|%>
+  <li><%="#{time_entry.hours} h, #{time_entry.minutes} m - #{time_entry.comments}"%></li>
+  <%end%>
+</ul>
