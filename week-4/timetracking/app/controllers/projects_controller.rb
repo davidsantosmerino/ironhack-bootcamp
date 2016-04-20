@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
     render "index"
   end
   def show
-    project_id = params[:id]
+    project_id = params[:project_id]
     @project = Project.find(project_id)
     render "show"
   end
@@ -18,5 +18,5 @@ class ProjectsController < ApplicationController
      :description => params[:project][:description])
    @project.save
    redirect_to "/projects/#{@project.id}"
- end
+  end
 end
