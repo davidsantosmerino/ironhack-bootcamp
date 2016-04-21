@@ -1,4 +1,12 @@
 <h3><%=@product.title%></h3>
 <small><%=@product.deadline%></small>
 <p><%=@product.description%></p>
+<ul>
+  <%@product.bids.each do |bid|%>
+    <li><%=bid.amount%>$ by <%=bid.user_name%></li>
+  <%end%>
+</ul>
+
+<a href="/users/<%=@user.id%>/products/<%=@product.id%>/bids/new">bid</a>
 <a href="/users/<%=@user.id%>/products/<%=@product.id%>/edit">edit</a>
+<%= link_to("delete", user_product_path(@user, @product), method: :delete, data: {confirm: 'Are you sure?'}) %> 
