@@ -1,0 +1,17 @@
+<%= form_for [@user, @product] do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+  <div>
+    <%= f.label :deadline %>
+    <%= f.date_field :deadline %>
+  </div>
+
+  <%= f.submit "update product" %>
+  <%= link_to "cancel", user_products_path(@user) %>
+<% end %>

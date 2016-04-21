@@ -3,7 +3,9 @@
   <%@users.each do |user|%>
     <li>
       <span>
-        <%=user.name%>
+        <a href="/users/<%=user.id%>">
+          <%=user.name%>
+        </a>
         <small>
           <%=user.email%>
         </small>

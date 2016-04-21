@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
     @products = Product.order(created_at: :desc)
   end
   def show
+    @user = User.find(params[:user_id])
     @product = Product.find(params[:product_id])
   end
   def new
@@ -16,6 +17,21 @@ class ProductsController < ApplicationController
     if @product.save
       redirect_to "/users/#{@user.id}/products/#{@product.id}"
     end
+  end
+  def edit
+    @user = User.find(params[:user_id])
+    @product = @user.products.find(params[:product_id])
+  end
+  def update
+    @user = User.find(params[:user_id])
+    @product = @user.products.find(params[:product_id])
+    @product.update(product_params)
+    if @product.save
+      redirect_to "/users/#{@user.id}/products/#{@product.id}"
+    end
+  end
+  def destroy
+    @product = Product.find(params[:product_id])
   end
 
   private

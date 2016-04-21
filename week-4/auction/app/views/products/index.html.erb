@@ -3,7 +3,9 @@
   <%@products.each do |product|%>
     <li>
       <span>
-        <%=product.title%>
+        <a href="/users/<%=product.user_id%>/products/<%=product.id%>">
+          <%=product.title%>
+        </a>
         <small>
           <%=product.deadline%>
         </small>
