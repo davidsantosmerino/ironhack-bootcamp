@@ -1,17 +1,18 @@
 class BidsController < ApplicationController
 
   def new
-    @user = User.find(params[:user_id])
+    @user = User.find(current_user_id)
     @product = Product.find(params[:product_id])
     @bid = @product.bids.new
   end
 
   def create
-    @user = User.find(params[:user_id])
+    @user = User.find(current_user_id)
     @product = Product.find(params[:product_id])
     @bid = @product.bids.new(bid_params)
     if @bid.save
-      redirect_to "/users/#{@user.id}/products/#{@product.id}"
+      flash[:notice] = "Bid sended successfully"
+      redirect_to "/products/#{@product.id}"
     end
   end
 
