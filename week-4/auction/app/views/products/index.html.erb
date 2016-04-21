@@ -1,0 +1,14 @@
+<h2>Products</h2>
+<ul>
+  <%@products.each do |product|%>
+    <li>
+      <span>
+        <%=product.title%>
+        <small>
+          <%=product.deadline%>
+        </small>
+      </span>
+    </li>
+  <%end%>
+</ul>
+<a href="/users/<%=@user.id%>/products/new">add product</a>
