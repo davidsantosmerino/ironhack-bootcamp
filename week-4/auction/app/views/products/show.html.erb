@@ -7,6 +7,6 @@
   <%end%>
 </ul>
 
-<a href="/users/<%=@user.id%>/products/<%=@product.id%>/bids/new">bid</a>
-<a href="/users/<%=@user.id%>/products/<%=@product.id%>/edit">edit</a>
-<%= link_to("delete", user_product_path(@user, @product), method: :delete, data: {confirm: 'Are you sure?'}) %> 
+<%= link_to("bid", new_user_product_bid_path(@user, @product, @bid)) %>
+<%= link_to("edit", edit_user_product_path(@user, @product)) %>
+<%= link_to("delete", user_product_path(@user, @product), method: :delete, data: {confirm: 'Are you sure?'}) %>

@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
 
   def show
     @user = User.find(params[:user_id])
-    @product = Product.find(params[:product_id])
+    @product = Product.find(params[:id])
   end
 
   def new
@@ -25,21 +25,21 @@ class ProductsController < ApplicationController
 
   def edit
     @user = User.find(params[:user_id])
-    @product = @user.products.find(params[:product_id])
+    @product = @user.products.find(params[:id])
   end
 
   def update
     @user = User.find(params[:user_id])
-    @product = @user.products.find(params[:product_id])
+    @product = @user.products.find(params[:id])
     @product.update(product_params)
     if @product.save
       redirect_to "/users/#{@user.id}/products/#{@product.id}"
     end
   end
-  
+
   def destroy
     @user = User.find(params[:user_id])
-    @product = @user.products.find(params[:product_id])
+    @product = @user.products.find(params[:id])
     @product.destroy
     redirect_to user_products_path(@user)
   end
