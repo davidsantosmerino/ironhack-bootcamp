@@ -1,0 +1,35 @@
+<h2>Product management</h2>
+<h3>Your products</h3>
+<ul>
+  <%@own_products.each do |product|%>
+    <li>
+      <span>
+        <%= link_to product.title, product_path(product) %>
+        <small>
+          <%=product.deadline%>
+        </small>
+      </span>
+    </li>
+  <%end%>
+</ul>
+<h3>Your bids</h3>
+<ul>
+  <%@bid_products.each do |product|%>
+    <li>
+      <span>
+        <%= link_to product.title, product_path(product) %>
+      </span>
+    </li>
+  <%end%>
+</ul>
+<h3>Your winning bids</h3>
+<ul>
+  <%@won_products.each do |product|%>
+    <li>
+      <span>
+        <%= link_to product.title, product_path(product) %>
+      </span>
+    </li>
+  <%end%>
+</ul>
+<%= link_to "add product", new_product_path() %>

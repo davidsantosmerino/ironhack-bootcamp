@@ -1,17 +1,27 @@
+<%= link_to("back", products_path) %>
 <% if flash[:notice] %>
   <%= flash[:notice] %>
 <% end %>
 <h3><%=@product.title%></h3>
-<small><%=@product.deadline%></small>
+<%if !@product.expired%>
+  <small><%=@time_left%> hours left</small>
+<%else%>
+  <small>expired</small>
+  <%if @product.winning_bider %>
+  <p>
+    <strong>Winner: </strong>
+    <%=@product.winning_bider.user_name%> -  $<%=@product.winning_bider.amount%>
+  </p>
+  <%end%>
+<%end%>
 <p><%=@product.description%></p>
+<h5>bids</h5>
 <ul>
   <%@product.bids.each do |bid|%>
-    <li><%=bid.amount%>$ by <%=bid.user_name%></li>
+    <li>$<%=bid.amount%> by <%=bid.user_name%></li>
   <%end%>
 </ul>
 
-<%= link_to("bid", new_product_bid_path(@product, @bid)) %>
-<%= link_to("edit", edit_product_path(@product)) %>
-<%= link_to("delete", product_path(current_user_id, @product), method: :delete, data: {confirm: 'Are you sure?'}) %>
-<br>
-<%= link_to("back", products_path) %>
+<%= link_to_unless(self_user?(@product.user_id) || @product.expired, "bid", new_product_bid_path(@product, @bid)) %>
+<%= link_to_if(self_user?(@product.user_id), "edit", edit_product_path(@product)) %>
+<%= link_to_if(self_user?(@product.user_id), "delete", product_path(@product), method: :delete, data: {confirm: 'Are you sure?'}) %>

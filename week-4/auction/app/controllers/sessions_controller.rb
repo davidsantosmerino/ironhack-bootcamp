@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email])
     if user
       log_in(user)
-      redirect_to "/products"
+      redirect_to "/users/#{user.id}/products_management"
     else
       render 'new'
     end

@@ -13,6 +13,8 @@ class BidsController < ApplicationController
     if @bid.save
       flash[:notice] = "Bid sended successfully"
       redirect_to "/products/#{@product.id}"
+    else
+      render "new"
     end
   end
 

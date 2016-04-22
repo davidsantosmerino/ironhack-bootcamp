@@ -6,6 +6,7 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
+    @time_left = ((@product.deadline - DateTime.now)/ 1.hour).round
   end
 
   def new
@@ -37,11 +38,11 @@ class ProductsController < ApplicationController
     @user = User.find(current_user_id)
     @product = @user.products.find(params[:id])
     @product.destroy
-    redirect_to user_products_path(@user)
+    redirect_to products_path(@user)
   end
 
   private
   def product_params
-    params.require(:product).permit(:title,:description,:deadline)
+    params.require(:product).permit(:title,:description,:deadline,:min_bid)
   end
 end
