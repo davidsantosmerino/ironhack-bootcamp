@@ -8,10 +8,10 @@ class Bid < ActiveRecord::Base
   end
 
   def enough_amount?
-    Product.find(self.product_id).min_bid > self.amount
+    Product.find(self.product_id).min_bid <= self.amount
   end
 
   def check_enough_amount
-    errors.add(:base, "Not enough amount") if enough_amount?
+    errors.add(:amount, "Not enough amount") unless enough_amount?
   end
 end
