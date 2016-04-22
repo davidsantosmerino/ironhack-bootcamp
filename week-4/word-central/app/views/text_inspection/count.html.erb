@@ -1,0 +1,7 @@
+<p>You'll need <em><%=@count%> minutes</em> to read the given text</p>
+<p>The most common words are:<p>
+  <ul>
+    <% @frequency.each do |word, times| %>
+      <li><%=word%> (<%=times%>)</li>
+    <% end %>
+  </ul>

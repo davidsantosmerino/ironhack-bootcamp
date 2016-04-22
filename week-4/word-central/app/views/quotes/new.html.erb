@@ -1,0 +1,6 @@
+<form action="/quotes/create" method="POST">
+  <label for="quotes_n_paragraphs">Number of paragraphs</label>
+  <input type="number" name="quotes[n_paragraphs]" id="quotes_n_paragraphs">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <button type="submit">create quotes</button>
+</form>

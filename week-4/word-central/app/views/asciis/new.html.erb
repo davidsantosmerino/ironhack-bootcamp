@@ -1,0 +1,5 @@
+<form action="/asciis/create" method="POST">
+  <textarea rows="4" cols="50" name="asciis[user_text]" placeholder="Type here your text"></textarea>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <button type="submit">asciify </button>
+</form>

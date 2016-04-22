@@ -1,0 +1,5 @@
+<form action="/text_inspection/count" method="POST">
+  <textarea rows="4" cols="50" name="text_inspection[user_text]" placeholder="Type here your text"></textarea>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <button type="submit">count</button>
+</form>
