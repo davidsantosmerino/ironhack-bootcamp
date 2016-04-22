@@ -2,6 +2,10 @@ class User < ActiveRecord::Base
   has_many :products
   has_many :bids
 
+  def available_products
+    Product.where("user_id != ?", self.id)
+  end
+
   def own_products
     self.products
   end

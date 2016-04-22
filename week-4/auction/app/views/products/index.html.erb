@@ -1,6 +1,6 @@
 <h2>Products</h2>
 <ul>
-  <%@products.each do |product|%>
+  <%@available_products.each do |product|%>
     <li>
       <span>
         <%= link_to product.title, product_path(product) %>
@@ -11,4 +11,56 @@
     </li>
   <%end%>
 </ul>
+<hr>
+<h2>Your products</h2>
+<ul>
+  <%@own_products.each do |product|%>
+    <li>
+      <span>
+        <%= link_to product.title, product_path(product) %>
+      </span>
+      <ul>
+        <%product.bids.each do |bid|%>
+          <li>
+            <%=bid.user_name%> -
+            $<%=bid.amount%>
+          </li>
+        <%end%>
+      </ul>
+    </li>
+  <%end%>
+</ul>
 <%= link_to "add product", new_product_path() %>
+<hr>
+<h2>Your bids</h2>
+<ul>
+  <%@bid_products.each do |product|%>
+    <li>
+      <span>
+        <%= link_to product.title, product_path(product) %>
+      </span>
+      <ul>
+        <%product.bids.each do |bid|%>
+          <li>
+            <%=bid.user_name%> -
+            $<%=bid.amount%>
+          </li>
+        <%end%>
+      </ul>
+    </li>
+  <%end%>
+</ul>
+<hr>
+<h2>Your winning biders</h2>
+<ul>
+  <%@won_products.each do |product|%>
+    <li>
+      <span>
+        <%= link_to product.title, product_path(product) %>
+      </span>
+      <p>
+        <%= product.description %>
+      </p>
+    </li>
+  <%end%>
+</ul>

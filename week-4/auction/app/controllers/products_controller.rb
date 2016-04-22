@@ -1,7 +1,11 @@
 class ProductsController < ApplicationController
 
   def index
-    @products = Product.order(created_at: :desc)
+    user = User.find_by(current_user_id)
+    @available_products = user.available_products
+    @own_products = user.own_products
+    @bid_products = user.bid_products
+    @won_products = user.won_products
   end
 
   def show
