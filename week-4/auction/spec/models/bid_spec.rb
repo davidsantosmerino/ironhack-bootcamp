@@ -19,12 +19,24 @@ RSpec.describe Bid, type: :model do
     subject(:bidder) { User.create(name: "bidder", email: "bidder@example.com") }
 
     it "return truthy when the amount is more than the min product bid" do
-      expect(bidder.bids.create(product_id: product.id, amount: 6)).to be_truthy
+      expect(bidder.bids.create!(product_id: product.id, amount: 6)).to be_truthy
     end
 
     it "raise an error when the amount is less than the min product bid" do
       expect do
-        (bidder.bids.create(product_id: product.id, amount: 2))
+        (bidder.bids.create!(product_id: product.id, amount: 2))
+      end.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+    it "raise an error when the amount is less than 0" do
+      expect do
+        (bidder.bids.create!(product_id: product.id, amount: -2))
+      end.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+    it "raise an error when the bidder and the owner are the same user" do
+      expect do
+        (owner.bids.create!(product_id: product.id, amount: 8))
       end.to raise_error(ActiveRecord::RecordInvalid)
     end
 
