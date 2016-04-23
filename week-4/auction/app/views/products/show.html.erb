@@ -22,7 +22,7 @@
     <li>$<%=bid.amount%> by <%=bid.user_email%></li>
   <%end%>
 </ul>
-<% if !self_user?(@product.user_id) %>
+<% if !@product.expired && !self_user?(@product.user_id) %>
   <%= form_for [@product , @bid] do |f| %>
     <div>
       <%= f.label :amount %>
