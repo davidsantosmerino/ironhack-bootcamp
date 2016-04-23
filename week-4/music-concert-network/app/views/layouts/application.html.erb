@@ -7,8 +7,28 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<header>
+  <div class="site-branding">
+    <img class="logo-nav" src="">
+  </div>
+  <nav>
+    <ul>
+      <li>All</li>
+    </ul>
+  </nav>
+</header>
 
 <%= yield %>
+
+<footer>
+  <div class="copyright">
+    <span>© 2016 David Santos Merino | All rights reserved</span>
+  </div>
+  <ul>
+    <li>About</li>
+    <li>Contact</li>
+  </ul>
+</footer>
 
 </body>
 </html>
