@@ -9,41 +9,48 @@ RSpec.describe Product, type: :model do
         password_confirmation: "aaaaaa"
       )
     }
-    subject(:product) {
-      owner.products.create(
+
+    it "return truthy when the min bid is greater than 0" do
+      product_params = {
         title: "Thing",
         description: "bla bla",
         deadline: 1.day.from_now,
         min_bid: 5
-      )
-    }
-    subject(:bidder) {
-      User.create(
-        email: "bidder@example.com",
-        password: "aaaaaa",
-        password_confirmation: "aaaaaa"
-      )
-    }
+      }
 
-    it "return truthy when the amount is more than the min product bid" do
-      expect(bidder.bids.create!(product_id: product.id, amount: 6)).to be_truthy
+      expect(owner.products.create(product_params)).to be_truthy
     end
 
-    it "raise an error when the amount is less than the min product bid" do
+    it "raise an error when title no provided" do
+      product_invalid_params = {
+        description: "bla bla",
+        deadline: 1.day.from_now,
+        min_bid: 1
+      }
       expect do
-        (bidder.bids.create!(product_id: product.id, amount: 2))
+        (owner.products.create!(product_invalid_params))
       end.to raise_error(ActiveRecord::RecordInvalid)
     end
 
-    it "raise an error when the amount is less than 0" do
+    it "raise an error when min_bid no provided" do
+      product_invalid_params = {
+        title: "Thing",
+        description: "bla bla",
+        deadline: 1.day.from_now
+      }
       expect do
-        (bidder.bids.create!(product_id: product.id, amount: -2))
+        (owner.products.create!(product_invalid_params))
       end.to raise_error(ActiveRecord::RecordInvalid)
     end
 
-    it "raise an error when the bidder and the owner are the same user" do
+    it "raise an error when deadline no provided" do
+      product_invalid_params = {
+        title: "Thing",
+        description: "bla bla",
+        min_bid: 1
+      }
       expect do
-        (owner.bids.create!(product_id: product.id, amount: 8))
+        (owner.products.create!(product_invalid_params))
       end.to raise_error(ActiveRecord::RecordInvalid)
     end
 
