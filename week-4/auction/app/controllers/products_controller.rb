@@ -1,7 +1,8 @@
 class ProductsController < ApplicationController
+  before_filter :authenticate_user!
 
   def index
-    user = User.find_by(current_user_id)
+    user = User.find_by(current_user.id)
     @available_products = user.available_products
     @own_products = user.own_products
     @bid_products = user.bid_products
@@ -10,16 +11,17 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
+    @bid =Bid.new
     @time_left = ((@product.deadline - DateTime.now)/ 1.hour).round
   end
 
   def new
-    @user = User.find(current_user_id)
+    @user = User.find(current_user)
     @product = @user.products.new
   end
 
   def create
-    @user = User.find(current_user_id)
+    @user = User.find(current_user)
     @product = @user.products.new(product_params)
     if @product.save
       redirect_to "/products/#{@product.id}"
@@ -39,7 +41,7 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @user = User.find(current_user_id)
+    @user = User.find(current_user)
     @product = @user.products.find(params[:id])
     @product.destroy
     redirect_to products_path(@user)

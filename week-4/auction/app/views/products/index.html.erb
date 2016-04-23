@@ -1,4 +1,5 @@
-<h2>Products</h2>
+<h2>Available products</h2>
+<span style="float:right"><%=session[:user_id]%></span>
 <ul>
   <%@available_products.each do |product|%>
     <li>

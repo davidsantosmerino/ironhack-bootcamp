@@ -1,9 +1,11 @@
 class User < ActiveRecord::Base
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
   has_many :products
   has_many :bids
 
   def available_products
-    Product.where("user_id != ?", self.id)
+    Product.where.not("user_id = ?", self.id)
   end
 
   def own_products
@@ -11,7 +13,7 @@ class User < ActiveRecord::Base
   end
 
   def bid_products
-    bids = self.bids
+    bids = Bid.where("user_id = ?", self.id)
     products_bids = bids.map {|bid| bid.product_id}.uniq
 
     Product.where("id = ?", products_bids)

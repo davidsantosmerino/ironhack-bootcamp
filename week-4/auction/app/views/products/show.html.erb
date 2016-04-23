@@ -16,12 +16,21 @@
 <%end%>
 <p><%=@product.description%></p>
 <h5>bids</h5>
+<p><strong>Min: </strong> <%=@product.min_bid%></p>
 <ul>
   <%@product.bids.each do |bid|%>
     <li>$<%=bid.amount%> by <%=bid.user_name%></li>
   <%end%>
 </ul>
+<%= form_for [@product , @bid] do |f| %>
+  <div>
+    <%= f.label :amount %>
+    <%= f.text_field :amount %>
+    <%= hidden_field_tag "bid[user_id]", current_user%>
+  </div>
+  <%= f.submit "bid" %>
+<% end %>
 
-<%= link_to_unless(self_user?(@product.user_id) || @product.expired, "bid", new_product_bid_path(@product, @bid)) %>
+
 <%= link_to_if(self_user?(@product.user_id), "edit", edit_product_path(@product)) %>
 <%= link_to_if(self_user?(@product.user_id), "delete", product_path(@product), method: :delete, data: {confirm: 'Are you sure?'}) %>

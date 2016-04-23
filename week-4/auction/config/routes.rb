@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
+  devise_for :users
 
-  get "/" => "sessions#new"
-  post "/" => "sessions#create"
-
-  resources(:users)
+  devise_scope :user do
+    authenticated :user do
+      root :to => 'products#index', as: :authenticated_root
+    end
+    unauthenticated :user do
+      root :to => 'devise/registrations#new', as: :unauthenticated_root
+    end
+  end
   resources(:products) do
-    resources(:bids, only: [:new, :create])
+    resources(:bids, only: [:create])
   end
 
 end
