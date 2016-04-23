@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       root :to => 'products#index', as: :authenticated_root
     end
     unauthenticated :user do
-      root :to => 'devise/registrations#new', as: :unauthenticated_root
+      root :to => 'devise/sessions#new', as: :unauthenticated_root
     end
   end
   resources(:products) do

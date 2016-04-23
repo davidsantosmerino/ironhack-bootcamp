@@ -21,7 +21,12 @@ class User < ActiveRecord::Base
 
   def won_products
     products = Product.all
-    products.select{|product| product.winning_bider == self.id }
+
+    products.select do |product|
+      if product.winning_bider
+        product.winning_bider.user_id == self.id
+      end
+    end
   end
 
 end

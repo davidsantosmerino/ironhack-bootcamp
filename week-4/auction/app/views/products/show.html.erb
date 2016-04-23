@@ -10,7 +10,7 @@
   <%if @product.winning_bider %>
   <p>
     <strong>Winner: </strong>
-    <%=@product.winning_bider.user_name%> -  $<%=@product.winning_bider.amount%>
+    <%=@product.winning_bider.user_email%> -  $<%=@product.winning_bider.amount%>
   </p>
   <%end%>
 <%end%>
@@ -19,16 +19,17 @@
 <p><strong>Min: </strong> <%=@product.min_bid%></p>
 <ul>
   <%@product.bids.each do |bid|%>
-    <li>$<%=bid.amount%> by <%=bid.user_name%></li>
+    <li>$<%=bid.amount%> by <%=bid.user_email%></li>
   <%end%>
 </ul>
-<%= form_for [@product , @bid] do |f| %>
-  <div>
-    <%= f.label :amount %>
-    <%= f.text_field :amount %>
-    <%= hidden_field_tag "bid[user_id]", current_user%>
-  </div>
-  <%= f.submit "bid" %>
+<% if !self_user?(@product.user_id) %>
+  <%= form_for [@product , @bid] do |f| %>
+    <div>
+      <%= f.label :amount %>
+      <%= f.text_field :amount %>
+    </div>
+    <%= f.submit "bid" %>
+  <% end %>
 <% end %>
 
 

@@ -5,8 +5,8 @@ class Bid < ActiveRecord::Base
   validate :check_enough_amount
   validate :check_bidder
 
-  def user_name
-    User.find(self.user_id).name
+  def user_email
+    User.find(self.user_id).email
   end
 
   private

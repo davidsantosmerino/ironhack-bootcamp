@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    user = User.find_by(current_user.id)
+    user = User.find(current_user.id)
     @available_products = user.available_products
     @own_products = user.own_products
     @bid_products = user.bid_products
