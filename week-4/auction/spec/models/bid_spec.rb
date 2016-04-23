@@ -4,8 +4,9 @@ RSpec.describe Bid, type: :model do
   describe "#create" do
     subject(:owner) {
       User.create(
-        name: "owner",
-        email: "owner@example.com"
+        email: "owner@example.com",
+        password: "aaaaaa",
+        password_confirmation: "aaaaaa"
       )
     }
     subject(:product) {
@@ -16,7 +17,13 @@ RSpec.describe Bid, type: :model do
         min_bid: 5
       )
     }
-    subject(:bidder) { User.create(name: "bidder", email: "bidder@example.com") }
+    subject(:bidder) {
+      User.create(
+        email: "bidder@example.com",
+        password: "aaaaaa",
+        password_confirmation: "aaaaaa"
+      )
+    }
 
     it "return truthy when the amount is more than the min product bid" do
       expect(bidder.bids.create!(product_id: product.id, amount: 6)).to be_truthy
