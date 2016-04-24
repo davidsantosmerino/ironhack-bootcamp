@@ -1,6 +1,7 @@
 class ConcertsController < ApplicationController
   def index
-    @concerts = Concert.where("date >= ?", DateTime.now)
+    @today_concerts = Concert.today
+    @this_month_concerts = Concert.this_month
   end
   def show
     @concert = Concert.find_by(id: params[:id])

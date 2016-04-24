@@ -1,19 +1,47 @@
-<section class="concerts container">
-    <% @concerts.each do |concert| %>
-      <%= link_to concert_path(concert) do %>
-        <article class="col-xs-6 col-md-4 col-lg-3">
-          <div class="img-container">
-            <span class="vertical-align"></span>
-            <%= image_tag concert.asset.url(:medium) %>
-          </div>
-          <h4><%= concert.artist %> @ <%= concert.city %></h4>
-          <h5><%= concert.date.strftime("%e %b %y") %></h5>
-          <p>
-            <%= truncate(concert.description,  :length => 80,
-                                                :separator => " ",
-                                                :omission => "... (view more)") %>
-          </p>
-        </article>
-    <% end %>
-<% end %>
-</section>
+<div class="container-fluid">
+  <div class="row">
+    <section class="concerts col-md-10">
+      <div class="row">
+        <h2>just happening</h2>
+      </div>
+        <div class="container-fluid">
+          <% @today_concerts.each do |concert| %>
+            <%= link_to concert_path(concert) do %>
+              <article class="col-xs-6 col-md-4 col-lg-3">
+                <div class="img-container">
+                  <span class="vertical-align"></span>
+                  <%= image_tag concert.asset.url(:medium) %>
+                </div>
+                <h4><%= concert.artist %> @ <%= concert.city %></h4>
+                <h5><%= concert.date.strftime("%e %b %y") %></h5>
+                <p>
+                  <%= truncate(concert.description,  :length => 80,
+                                                      :separator => " ",
+                                                      :omission => "... (view more)") %>
+                </p>
+              </article>
+            <% end %>
+          <% end %>
+        </div>
+    </section>
+    <aside class="col-md-2">
+      <h3>this month</h3>
+      <ul class="media-list">
+        <% @this_month_concerts.each do |concert| %>
+          <li class="media">
+            <div class="media-left">
+              <%= link_to(concert_path(concert)) do %>
+                <%= image_tag concert.asset.url(:small), class: "media-object" %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <p>
+                <%= concert.artist %>
+              </p>
+            </div>
+          </li>
+        <% end %>
+      <ul>
+    </aside>
+  </div>
+</div>
