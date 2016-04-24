@@ -1,7 +1,4 @@
-header, footer {
-  float: left;
-  width: 100%;
-}
+@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
 
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -12,6 +9,32 @@ body {
   -moz-font-smoothing: antialiased;
   font-smoothing: antialiased;
   font-weight: 300;
+}
+
+header, footer {
+  float: left;
+  width: 100%;
+}
+
+.site-branding a {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 2em;
+}
+
+.copyright {
+  float: left;
+}
+
+.navbar-nav.footer {
+  float: right;
+}
+
+.navbar-nav.footer li {
+  list-style-type: none;
+}
+
+.navbar-nav.footer li a {
+  margin-left: 15px;
 }
 
 section.main-container {
@@ -33,8 +56,4 @@ section.main-container {
 .concerts article .img-container {
   text-align: center;
   vertical-align: middle;
-}
-
-.img-container img{
-
 }

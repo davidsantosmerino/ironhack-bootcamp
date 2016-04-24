@@ -1,4 +1,3 @@
-<h1>Music concert network</h1>
 <section class="concerts container">
     <% @concerts.each do |concert| %>
       <%= link_to concert_path(concert) do %>
@@ -7,7 +6,8 @@
             <span class="vertical-align"></span>
             <%= image_tag concert.asset.url(:medium) %>
           </div>
-          <h4><%= concert.artist %></h4>
+          <h4><%= concert.artist %> @ <%= concert.city %></h4>
+          <h5><%= concert.date.strftime("%e %b %y") %></h5>
           <p>
             <%= truncate(concert.description,  :length => 80,
                                                 :separator => " ",

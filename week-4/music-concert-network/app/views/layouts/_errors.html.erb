@@ -1,0 +1,12 @@
+<% if model.errors.any? %>
+<div class="form-errors">
+  <h3>
+    <%= pluralize(model.errors.count, "error") %>
+  </h3>
+  <ul>
+    <% model.errors.full_messages.each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>

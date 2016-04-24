@@ -10,7 +10,12 @@ class ConcertsController < ApplicationController
   end
   def create
     @concert = Concert.new(concert_params)
-    redirect_to root_path if @concert.save
+    if @concert.valid?
+      @concert.save
+      redirect_to root_path
+    else
+      render :new
+    end
   end
 
   private
