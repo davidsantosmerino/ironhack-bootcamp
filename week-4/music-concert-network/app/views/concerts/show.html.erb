@@ -1,0 +1,9 @@
+<article>
+  <%= image_tag @concert.asset.url(:medium) %>
+  <h2><%= @concert.artist %></h2>
+  <h3>
+    <%= @concert.city %> -
+    <%= @concert.date.strftime("%e %b %y") %>
+  </h3>
+  <p><%= @concert.description %></p>
+</article>

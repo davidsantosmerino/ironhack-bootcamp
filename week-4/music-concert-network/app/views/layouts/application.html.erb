@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>MusicConcertNetwork</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-<header>
-  <div class="site-branding">
-    <img class="logo-nav" src="">
-  </div>
-  <nav>
-    <ul>
-      <li>All</li>
-    </ul>
-  </nav>
-</header>
+  <head>
+    <title>MusicConcertNetwork</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <header>
+      <div class="site-branding">
+        <img class="logo-nav" src="">
+      </div>
+      <nav>
+        <ul>
+          <li>All</li>
+        </ul>
+      </nav>
+    </header>
 
-<%= yield %>
+    <section class="main-container">
+      <%= yield %>
+    </section>
 
-<footer>
-  <div class="copyright">
-    <span>© 2016 David Santos Merino | All rights reserved</span>
-  </div>
-  <ul>
-    <li>About</li>
-    <li>Contact</li>
-  </ul>
-</footer>
-
-</body>
+    <footer>
+      <div class="copyright">
+        <span>© 2016 David Santos Merino | All rights reserved</span>
+      </div>
+      <ul>
+        <li>About</li>
+        <li>Contact</li>
+      </ul>
+    </footer>
+  </body>
 </html>

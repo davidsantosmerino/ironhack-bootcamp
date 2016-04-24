@@ -1,14 +1,19 @@
 <h1>Music concert network</h1>
-<section class="concerts">
-<% @concerts.each do |concert| %>
-  <article>
-    <%= image_tag concert.asset.url(:medium) %>
-    <h4><%= concert.artist %></h4>
-    <p>
-      <%= truncate(concert.description,  :length => 80,
-                                          :separator => " ",
-                                          :omission => "... (view more)") %>
-    </p>
-  </article>
+<section class="concerts container">
+    <% @concerts.each do |concert| %>
+      <%= link_to concert_path(concert) do %>
+        <article class="col-xs-6 col-md-4 col-lg-3">
+          <div class="img-container">
+            <span class="vertical-align"></span>
+            <%= image_tag concert.asset.url(:medium) %>
+          </div>
+          <h4><%= concert.artist %></h4>
+          <p>
+            <%= truncate(concert.description,  :length => 80,
+                                                :separator => " ",
+                                                :omission => "... (view more)") %>
+          </p>
+        </article>
+    <% end %>
 <% end %>
 </section>
