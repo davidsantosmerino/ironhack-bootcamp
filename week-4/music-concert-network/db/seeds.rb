@@ -4,7 +4,8 @@ Concert.create(
   city: "Barcelona",
   date: DateTime.new(2016, 05, 14),
   price: 65.00,
-  description: "Bruce Springsteen and The E Street Band iniciarán su gira europea en Barcelona el 14 de Mayo, en el Camp Nou. Le seguirán los conciertos de San Sebastián, el 17 de  Mayo en el Estadio de Anoeta y Madrid, el 21 de Mayo en el Estadio Santiago Bernabéu. Tres únicos conciertos en España."
+  description: "Bruce Springsteen and The E Street Band iniciarán su gira europea en Barcelona el 14 de Mayo, en el Camp Nou. Le seguirán los conciertos de San Sebastián, el 17 de  Mayo en el Estadio de Anoeta y Madrid, el 21 de Mayo en el Estadio Santiago Bernabéu. Tres únicos conciertos en España.",
+  asset: File.new("#{Rails.root}/app/assets/images/bruce-springsteen.jpg"),
 )
 Concert.create(
   artist: "Paul McCartney",

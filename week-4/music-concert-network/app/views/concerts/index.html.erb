@@ -1,1 +1,14 @@
 <h1>Music concert network</h1>
+<section class="concerts">
+<% @concerts.each do |concert| %>
+  <article>
+    <%= image_tag concert.asset.url(:medium) %>
+    <h4><%= concert.artist %></h4>
+    <p>
+      <%= truncate(concert.description,  :length => 80,
+                                          :separator => " ",
+                                          :omission => "... (view more)") %>
+    </p>
+  </article>
+<% end %>
+</section>

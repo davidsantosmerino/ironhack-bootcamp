@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160423152446) do
+ActiveRecord::Schema.define(version: 20160424104515) do
 
   create_table "concerts", force: :cascade do |t|
     t.string   "artist"
@@ -20,8 +20,12 @@ ActiveRecord::Schema.define(version: 20160423152446) do
     t.date     "date"
     t.float    "price"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "asset_file_name"
+    t.string   "asset_content_type"
+    t.integer  "asset_file_size"
+    t.datetime "asset_updated_at"
   end
 
 end
