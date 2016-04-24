@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
-  resources :site, only:[:index], path: "/"
-  resources :concerts
+  root :to => "concerts#index"
+  resources :concerts, except: [:index]
 end
