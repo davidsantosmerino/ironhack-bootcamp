@@ -1,0 +1,32 @@
+.main-container {
+  width: 500px;
+  height: 500px;
+}
+
+.main-container div {
+  float: left;
+  width: 10%;
+  height: 10%;
+  box-sizing: border-box;
+  border: 1px solid white;
+}
+
+.pixel {
+  background-color: grey;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}
