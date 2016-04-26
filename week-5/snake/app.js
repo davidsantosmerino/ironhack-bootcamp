@@ -11,6 +11,12 @@ $('document').ready(function(){
   var COLUMN_SIZE = 10;
   var SNAKE_LENGTH = 5;
   var GRID_PIXELS = ROW_SIZE * COLUMN_SIZE;
+  var CLASSES = {
+    head: 'head',
+    body: 'body',
+    cell: 'cell',
+    novisible: 'no-visible'
+  }
   var DIRECTIONS = {
     left: "left",
     right: "right",
@@ -51,7 +57,7 @@ $('document').ready(function(){
     else {
       start();
     }
-    $('.pause-container').toggleClass('no-visible');
+    $('.pause-container').toggleClass(CLASSES.novisible);
   }
 
   function pause() {
@@ -62,22 +68,33 @@ $('document').ready(function(){
     INTERVAL_ID = setInterval(move, 300);
   }
 
-  function setup(){
-    for (var i = 0; i < GRID_PIXELS ; i++) {
-      var pixel = $('<div>').addClass('pixel');
-      $('.main-container').append(pixel);
+  function createGrid() {
+    for (var i = 0; i < COLUMN_SIZE ; i++) {
+      for (var j = 0; j < ROW_SIZE; j++) {
+        var pixel = $('<div>').addClass(CLASSES.cell);
+        $('.main-container').append(pixel);
+      }
     }
+  }
+
+  function createSnake() {
     var allPixels = $('.main-container').children();
     var headIndex = Math.floor(GRID_PIXELS / 2);
     for (var i = headIndex; i < headIndex + SNAKE_LENGTH; i++) {
       if(i === headIndex){
-        $(allPixels[i]).addClass('head');
+        $(allPixels[i]).addClass(CLASSES.head);
       }
       else {
-        $(allPixels[i]).addClass('body');
+        $(allPixels[i]).addClass(CLASSES.body);
       }
       SNAKE.push(i);
     }
+  }
+
+  function setup(){
+    createGrid();
+    createSnake();
+    start();
   }
 
   function move(){
@@ -126,8 +143,8 @@ $('document').ready(function(){
         break;
     }
     if (newHeadElement > -1 && newHeadElement < ROW_SIZE*COLUMN_SIZE ) {
-      $(allPixels[headIndex]).toggleClass('head');
-      $(allPixels[newHeadElement]).toggleClass('head');
+      $(allPixels[headIndex]).toggleClass(CLASSES.head);
+      $(allPixels[newHeadElement]).toggleClass(CLASSES.head);
       thisSnake.push(newHeadElement);
     }
   }
@@ -152,6 +169,6 @@ $('document').ready(function(){
       input[0].action();
     }
   });
+
   setup();
-  start();
 });
