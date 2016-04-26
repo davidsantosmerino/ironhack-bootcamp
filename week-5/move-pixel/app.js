@@ -86,5 +86,4 @@ $('document').ready(function(){
       alert('No active element to move!');
     }
   });
-
 });
