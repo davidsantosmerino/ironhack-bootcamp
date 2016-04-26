@@ -9,10 +9,15 @@
   height: 10%;
   box-sizing: border-box;
   border: 1px solid white;
+  cursor: pointer;
 }
 
 .pixel {
-  background-color: grey;
+  background-color: DeepSkyBlue;
+}
+
+.active {
+  background-color: black;
 }
 
 .yellow {
