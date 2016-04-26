@@ -1,11 +1,15 @@
 $('document').ready(function(){
+  //Constants
   var ROW_SIZE = 10;
   var COLUMN_SIZE = 10;
+  var SNAKE_LENGTH = 5;
+  var GRID_PIXELS = ROW_SIZE * COLUMN_SIZE;
   var KEYS = {
     left: 97,
     right: 100,
     up: 119,
-    down: 115
+    down: 115,
+    space: 32
   }
   var DIRECTIONS = {
     left: 'l',
@@ -13,20 +17,39 @@ $('document').ready(function(){
     up: 'u',
     down: 'd'
   }
+  //Game vars
   var CURRENT_DIRECTION = DIRECTIONS.left;
-  var SNAKE_LENGTH = 3;
-  var GRID_PIXELS = ROW_SIZE * COLUMN_SIZE;
   var SNAKE = [];
+  var INTERVAL_ID = 0;
+  var GAME_PAUSE = false;
+
+  function pauseToggle(){
+    if(GAME_PAUSE){
+      pause();
+    }
+    else {
+      start();
+    }
+    $('.pause-container').toggleClass('no-visible');
+  }
+
+  function pause() {
+    clearInterval(INTERVAL_ID);
+  }
 
   function start(){
+    INTERVAL_ID = setInterval(move, 300)
+  }
+
+  function setup(){
     for (var i = 0; i < GRID_PIXELS ; i++) {
       var pixel = $('<div>').addClass('pixel');
       $('.main-container').append(pixel);
     }
     var allPixels = $('.main-container').children();
-    var randomIndex = Math.floor(Math.random() * allPixels.length - 3);
-    for (var i = randomIndex; i < randomIndex + SNAKE_LENGTH; i++) {
-      if(i === randomIndex){
+    var headIndex = Math.floor(GRID_PIXELS / 2);
+    for (var i = headIndex; i < headIndex + SNAKE_LENGTH; i++) {
+      if(i === headIndex){
         $(allPixels[i]).addClass('head');
       }
       else {
@@ -34,24 +57,14 @@ $('document').ready(function(){
       }
       SNAKE.push(i);
     }
-    setInterval(move, 300)
-  }
-
-  function removeExistingActive(){
-    var allPixels = $('.main-container').children();
-    allPixels.each(function(pixelIndex){
-      $(this).removeClass('head');
-    });
   }
 
   function move(){
     var thisSnake = [];
     var headIndex = SNAKE[0];
-    if(headIndex > -1){
-      headMove(thisSnake);
-      bodyMove(thisSnake);
-      SNAKE = thisSnake;
-    }
+    headMove(thisSnake);
+    bodyMove(thisSnake);
+    SNAKE = thisSnake;
   }
 
   function headMove(thisSnake){
@@ -110,27 +123,30 @@ $('document').ready(function(){
     }
   }
 
-  $('.pixel').on('click', function(){
-    removeExistingActive();
-    $(this).toggleClass('head');
-  });
-
   $('body').on('keypress', function(e){
     switch (e.which) {
       case KEYS.left:
-      CURRENT_DIRECTION = DIRECTIONS.left;
+      if(CURRENT_DIRECTION !== DIRECTIONS.right)
+        CURRENT_DIRECTION = DIRECTIONS.left;
         break;
       case KEYS.up:
-      CURRENT_DIRECTION = DIRECTIONS.up;
+      if(CURRENT_DIRECTION !== DIRECTIONS.down)
+        CURRENT_DIRECTION = DIRECTIONS.up;
         break;
       case KEYS.down:
-      CURRENT_DIRECTION = DIRECTIONS.down;
+      if(CURRENT_DIRECTION !== DIRECTIONS.up)
+        CURRENT_DIRECTION = DIRECTIONS.down;
         break;
       case KEYS.right:
-      CURRENT_DIRECTION = DIRECTIONS.right;
+      if(CURRENT_DIRECTION !== DIRECTIONS.left)
+        CURRENT_DIRECTION = DIRECTIONS.right;
+        break;
+      case KEYS.space:
+      GAME_PAUSE = !GAME_PAUSE;
+      pauseToggle();
         break;
     }
   });
-
+  setup();
   start();
 });
