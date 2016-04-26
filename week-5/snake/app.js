@@ -17,7 +17,7 @@ $('document').ready(function(){
     up: "up",
     down: "down",
   }
-  var KEYS = {
+  var KEY_CODES = {
     left: 97,
     right: 100,
     up: 119,
@@ -25,18 +25,17 @@ $('document').ready(function(){
     space: 32
   }
   var INPUTS = [
-    new Input(KEYS.left, DIRECTIONS.left, DIRECTIONS.right, function(){setCurrentDirection(this)}),
-    new Input(KEYS.right, DIRECTIONS.right, DIRECTIONS.left, function(){setCurrentDirection(this)}),
-    new Input(KEYS.up, DIRECTIONS.up, DIRECTIONS.down, function(){setCurrentDirection(this)}),
-    new Input(KEYS.down, DIRECTIONS.down, DIRECTIONS.up, function(){setCurrentDirection(this)}),
-    new Input(KEYS.space, null, null, function(){pauseToggle()}),
+    new Input(KEY_CODES.left, DIRECTIONS.left, DIRECTIONS.right, function(){setCurrentDirection(this)}),
+    new Input(KEY_CODES.right, DIRECTIONS.right, DIRECTIONS.left, function(){setCurrentDirection(this)}),
+    new Input(KEY_CODES.up, DIRECTIONS.up, DIRECTIONS.down, function(){setCurrentDirection(this)}),
+    new Input(KEY_CODES.down, DIRECTIONS.down, DIRECTIONS.up, function(){setCurrentDirection(this)}),
+    new Input(KEY_CODES.space, null, null, function(){pauseToggle()}),
   ]
   //Game vars
   var CURRENT_DIRECTION = DIRECTIONS.left;
   var SNAKE = [];
   var INTERVAL_ID = 0;
   var GAME_PAUSE = false;
-
 
   function setCurrentDirection(direction){
     if(direction.oposite !== CURRENT_DIRECTION){
@@ -60,7 +59,7 @@ $('document').ready(function(){
   }
 
   function start(){
-    INTERVAL_ID = setInterval(move, 300)
+    INTERVAL_ID = setInterval(move, 300);
   }
 
   function setup(){
@@ -83,7 +82,6 @@ $('document').ready(function(){
 
   function move(){
     var thisSnake = [];
-    var headIndex = SNAKE[0];
     headMove(thisSnake);
     bodyMove(thisSnake);
     SNAKE = thisSnake;
