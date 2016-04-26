@@ -1,9 +1,22 @@
 $('document').ready(function(){
+  //Objects
+  var Input = function(key, direction, oposite, action){
+    this.key = key;
+    this.direction = direction;
+    this.oposite = oposite;
+    this.action = action;
+  }
   //Constants
   var ROW_SIZE = 10;
   var COLUMN_SIZE = 10;
   var SNAKE_LENGTH = 5;
   var GRID_PIXELS = ROW_SIZE * COLUMN_SIZE;
+  var DIRECTIONS = {
+    left: "left",
+    right: "right",
+    up: "up",
+    down: "down",
+  }
   var KEYS = {
     left: 97,
     right: 100,
@@ -11,19 +24,28 @@ $('document').ready(function(){
     down: 115,
     space: 32
   }
-  var DIRECTIONS = {
-    left: 'l',
-    right: 'r',
-    up: 'u',
-    down: 'd'
-  }
+  var INPUTS = [
+    new Input(KEYS.left, DIRECTIONS.left, DIRECTIONS.right, function(){setCurrentDirection(this)}),
+    new Input(KEYS.right, DIRECTIONS.right, DIRECTIONS.left, function(){setCurrentDirection(this)}),
+    new Input(KEYS.up, DIRECTIONS.up, DIRECTIONS.down, function(){setCurrentDirection(this)}),
+    new Input(KEYS.down, DIRECTIONS.down, DIRECTIONS.up, function(){setCurrentDirection(this)}),
+    new Input(KEYS.space, null, null, function(){pauseToggle()}),
+  ]
   //Game vars
   var CURRENT_DIRECTION = DIRECTIONS.left;
   var SNAKE = [];
   var INTERVAL_ID = 0;
   var GAME_PAUSE = false;
 
+
+  function setCurrentDirection(direction){
+    if(direction.oposite !== CURRENT_DIRECTION){
+      CURRENT_DIRECTION = direction.direction;
+    }
+  }
+
   function pauseToggle(){
+    GAME_PAUSE = !GAME_PAUSE;
     if(GAME_PAUSE){
       pause();
     }
@@ -115,8 +137,8 @@ $('document').ready(function(){
   function bodyMove(thisSnake) {
     var allPixels = $('.main-container').children();
     for (var i = 1; i < SNAKE.length; i++) {
-      currentPosition = SNAKE[i-1];
-      prevPosition = SNAKE[i];
+      var currentPosition = SNAKE[i-1];
+      var prevPosition = SNAKE[i];
       $(allPixels[currentPosition]).toggleClass('body');
       $(allPixels[prevPosition]).toggleClass('body');
       thisSnake.push(currentPosition);
@@ -124,27 +146,12 @@ $('document').ready(function(){
   }
 
   $('body').on('keypress', function(e){
-    switch (e.which) {
-      case KEYS.left:
-      if(CURRENT_DIRECTION !== DIRECTIONS.right)
-        CURRENT_DIRECTION = DIRECTIONS.left;
-        break;
-      case KEYS.up:
-      if(CURRENT_DIRECTION !== DIRECTIONS.down)
-        CURRENT_DIRECTION = DIRECTIONS.up;
-        break;
-      case KEYS.down:
-      if(CURRENT_DIRECTION !== DIRECTIONS.up)
-        CURRENT_DIRECTION = DIRECTIONS.down;
-        break;
-      case KEYS.right:
-      if(CURRENT_DIRECTION !== DIRECTIONS.left)
-        CURRENT_DIRECTION = DIRECTIONS.right;
-        break;
-      case KEYS.space:
-      GAME_PAUSE = !GAME_PAUSE;
-      pauseToggle();
-        break;
+    var keyCode = e.which;
+    input = $.grep(INPUTS, function( direction ) {
+      return direction.key == keyCode;
+    });
+    if(input.length > 0){
+      input[0].action();
     }
   });
   setup();
