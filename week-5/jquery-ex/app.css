@@ -1,3 +1,41 @@
-.phrases-list-toggle {
+.main-container {
+  margin: 50px;
+}
+
+.phrase-container, .phrases-list-container  {
+  margin: 0 auto;
+  width: 50%;
+  text-align: center;
+}
+
+.phrase-container {
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.phrase-container .phrase {
+
+}
+
+.phrases-list {
+  margin: 0px;
+  padding: 0px;
+}
+
+.phrases-list li {
+  list-style: none;
+}
+
+.phrases-list-toggle, .delete {
   cursor: pointer;
+}
+
+.delete {
+  margin-left: 5px;
+  color: red;
+}
+
+.preappend-phrase {
+  color: #ccc;
 }

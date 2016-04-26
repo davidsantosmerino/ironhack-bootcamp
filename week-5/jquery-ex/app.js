@@ -1,4 +1,6 @@
 
+  var ACTIVE_CLASS = 'active';
+  var ENTER_KEY = 13;
   var phrases = [
     'Hello world!',
     'Just testing',
@@ -11,8 +13,8 @@
   }
 
   var randomizePhrase = function(){
-    var phraseElem = $('.main-container p');
-    var randomIndex = Math.trunc(Math.random() * phrases.length);
+    var phraseElem = $('.phrase-container .phrase');
+    var randomIndex = Math.floor(Math.random() * phrases.length);
     phraseElem.text(phrases[randomIndex]);
   }
 
@@ -26,8 +28,11 @@
 
   var appendPhrase = function(phrase){
     var phrasesList = $('.phrases-list');
-    var liElement = '<li><span class="phrase">' + phrase + '</span><span class="delete"> x </span></li>'
-    phrasesList.append(liElement);
+    var liElem = $('<li>');
+    var spanPhraseElem = $('<span>').addClass('phrase').text(phrase);
+    var iDeleteElem = $('<i>').addClass('delete fa fa-times');
+    liElem.append(spanPhraseElem).append(iDeleteElem);
+    phrasesList.append(liElem);
   }
 
 $( document ).ready(function() {
@@ -35,17 +40,17 @@ $( document ).ready(function() {
   $('.js-btn-randomize-phrase').on('click', randomizePhrase);
 
   $('.js-input-phrase').on('keypress',function(e) {
-    if (e.which == 13) {
+    if (e.which == ENTER_KEY) {
       e.preventDefault();
       var inputValue = $(this).val();
       phrases.push(inputValue);
       $(this).val('');
-      $('.preappend-phrase').text('');
+      $('.preappend-phrase').empty();
       renderPhrases();
     }
   });
 
-  $('.js-input-phrase').on('input',function(e) {
+  $('.js-input-phrase').on('keyup',function(e) {
     $('.preappend-phrase').text($(this).val());
   });
 
@@ -58,9 +63,9 @@ $( document ).ready(function() {
   });
 
   $('.phrases-list-toggle').on('click', function(){
-    $(this).toggleClass('active');
+    $(this).toggleClass(ACTIVE_CLASS);
     $('.phrases-list').toggle();
-    var toggleText = $(this).hasClass('active') ? 'hide' : 'show';
+    var toggleText = $(this).hasClass(ACTIVE_CLASS) ? 'hide' : 'show';
     $(this).text(toggleText);
   });
 
