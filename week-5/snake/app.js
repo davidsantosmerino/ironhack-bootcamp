@@ -108,6 +108,12 @@ $('document').ready(function(){
     $('.pause-container').toggleClass(CSS_CLASS.novisible);
   }
 
+  function gameOver() {
+    $('body').off();
+    clearInterval(INTERVAL_ID);
+    $('.game-over-container').toggleClass(CSS_CLASS.novisible);
+  }
+
   function pause() {
     clearInterval(INTERVAL_ID);
   }
@@ -141,14 +147,13 @@ $('document').ready(function(){
   }
 
   function generateFood() {
-    var xPosition = Math.floor(Math.random() * ROW_SIZE);
-    var yPosition = Math.floor(Math.random() * COLUMN_SIZE);
+    var foodCell = new Cell(Math.floor(Math.random() * ROW_SIZE), Math.floor(Math.random() * COLUMN_SIZE));
     var sharedPositions = $.grep(SNAKE, function(cell) {
-      return cell.x == xPosition && cell.y == yPosition;
+      return sameCell(cell, foodCell);
     });
     if(sharedPositions.length < 1){
-      getCellByPosition(xPosition, yPosition).addClass(CSS_CLASS.food);
-      FOOD_CELL = new Cell(xPosition, yPosition);
+      getCellByPosition(foodCell.x, foodCell.y).addClass(CSS_CLASS.food);
+      FOOD_CELL = new Cell(foodCell.x, foodCell.y);
     }
     else {
       generateFood();
@@ -195,9 +200,17 @@ $('document').ready(function(){
       return movement.direction == CURRENT_DIRECTION;
     });
     var newCell = movement[0].action(headCell);
-    getCellByPosition(headCell.x, headCell.y).toggleClass(CSS_CLASS.snake);
-    getCellByPosition(newCell.x, newCell.y).toggleClass(CSS_CLASS.snake);
-    newSnake.push(newCell);
+    var sharedPositions = $.grep(SNAKE, function(cell) {
+      return sameCell(cell, newCell);
+    });
+    if(sharedPositions.length < 1){
+      getCellByPosition(headCell.x, headCell.y).toggleClass(CSS_CLASS.snake);
+      getCellByPosition(newCell.x, newCell.y).toggleClass(CSS_CLASS.snake);
+      newSnake.push(newCell);
+    }
+    else{
+      gameOver();
+    }
   }
 
   function moveBody(newSnake) {

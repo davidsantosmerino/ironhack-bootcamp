@@ -4,7 +4,7 @@
   position: absolute;
 }
 
-.pause-container {
+.message-container {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 4em;
   color: white;
@@ -16,6 +16,11 @@
   line-height: 500px;
   background-color: black;
   opacity: 0.6;
+}
+
+.message-container span {
+  border: 5px solid white;
+  padding: 20px;
 }
 
 .main-container div {
