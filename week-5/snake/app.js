@@ -60,12 +60,6 @@ $('document').ready(function(){
     new Movement(DIRECTION.down, function(cell){return downMovement(cell)}),
   ]
 
-  var INCREASE_POSITIONS = [
-    new Movement(DIRECTION.left, function(cell){return leftIncrease(cell)}),
-    new Movement(DIRECTION.right, function(cell){return rightIncrease(cell)}),
-    new Movement(DIRECTION.up, function(cell){return upIncrease(cell)}),
-    new Movement(DIRECTION.down, function(cell){return downIncrease(cell)})
-  ]
   //Game vars
   var CURRENT_DIRECTION = DIRECTION.left;
   var SNAKE = [];
@@ -79,19 +73,9 @@ $('document').ready(function(){
     return newCell;
   }
 
-  function leftIncrease(cell) {
-    var newCell = new Cell(cell.x+1, cell.y);
-    return newCell;
-  }
-
   function rightMovement(cell) {
     var newCell = new Cell(cell.x, cell.y);
     newCell.x = newCell.x >= ROW_SIZE-1 ? newCell.x = 0 : newCell.x+1;
-    return newCell;
-  }
-
-  function rightIncrease(cell) {
-    var newCell = new Cell(cell.x-1, cell.y);
     return newCell;
   }
 
@@ -101,19 +85,9 @@ $('document').ready(function(){
     return newCell;
   }
 
-  function upIncrease(cell) {
-    var newCell = new Cell(cell.x, cell.y-1);
-    return newCell;
-  }
-
   function downMovement(cell) {
     var newCell = new Cell(cell.x, cell.y);
     newCell.y = newCell.y >= COLUMN_SIZE -1 ? 0 : newCell.y+1;
-    return newCell;
-  }
-
-  function downIncrease(cell) {
-    var newCell = new Cell(cell.x, cell.y+1);
     return newCell;
   }
 
