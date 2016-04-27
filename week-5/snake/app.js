@@ -11,6 +11,8 @@ $('document').ready(function(){
   var CSS_CLASS = {
     head: 'head',
     body: 'body',
+    snake: 'snake',
+    food: 'food',
     cell: 'cell',
     novisible: 'no-visible'
   }
@@ -57,15 +59,28 @@ $('document').ready(function(){
     new Movement(DIRECTION.up, function(cell){return upMovement(cell)}),
     new Movement(DIRECTION.down, function(cell){return downMovement(cell)}),
   ]
+
+  var INCREASE_POSITIONS = [
+    new Movement(DIRECTION.left, function(cell){return leftIncrease(cell)}),
+    new Movement(DIRECTION.right, function(cell){return rightIncrease(cell)}),
+    new Movement(DIRECTION.up, function(cell){return upIncrease(cell)}),
+    new Movement(DIRECTION.down, function(cell){return downIncrease(cell)})
+  ]
   //Game vars
   var CURRENT_DIRECTION = DIRECTION.left;
   var SNAKE = [];
   var INTERVAL_ID = 0;
   var GAME_PAUSE = false;
+  var FOOD_CELL = null;
 
   function leftMovement(cell) {
     var newCell = new Cell(cell.x, cell.y);
     newCell.x = newCell.x <= 0 ? newCell.x = ROW_SIZE - 1 : newCell.x-1;
+    return newCell;
+  }
+
+  function leftIncrease(cell) {
+    var newCell = new Cell(cell.x+1, cell.y);
     return newCell;
   }
 
@@ -75,15 +90,30 @@ $('document').ready(function(){
     return newCell;
   }
 
+  function rightIncrease(cell) {
+    var newCell = new Cell(cell.x-1, cell.y);
+    return newCell;
+  }
+
   function upMovement(cell) {
     var newCell = new Cell(cell.x, cell.y);
     newCell.y = newCell.y <= 0 ? COLUMN_SIZE - 1 : newCell.y-1;
     return newCell;
   }
 
+  function upIncrease(cell) {
+    var newCell = new Cell(cell.x, cell.y-1);
+    return newCell;
+  }
+
   function downMovement(cell) {
     var newCell = new Cell(cell.x, cell.y);
     newCell.y = newCell.y >= COLUMN_SIZE -1 ? 0 : newCell.y+1;
+    return newCell;
+  }
+
+  function downIncrease(cell) {
+    var newCell = new Cell(cell.x, cell.y+1);
     return newCell;
   }
 
@@ -129,10 +159,25 @@ $('document').ready(function(){
     var columnPosition = Math.floor(COLUMN_SIZE / 2);
     var headCell = new Cell(rowPosition, columnPosition);
     for (var i = headCell.x; i < headCell.x + SNAKE_LENGTH; i++) {
-      var classType = (i === headCell.x) ? CSS_CLASS.head : CSS_CLASS.body;
+      var classType = (i === headCell.x) ? CSS_CLASS.snake : CSS_CLASS.snake;
       getCellByPosition(i, rowPosition).addClass(classType);
       var cell = new Cell(i, rowPosition);
       SNAKE.push(cell);
+    }
+  }
+
+  function generateFood() {
+    var xPosition = Math.floor(Math.random() * ROW_SIZE);
+    var yPosition = Math.floor(Math.random() * COLUMN_SIZE);
+    var sharedPositions = $.grep(SNAKE, function(cell) {
+      return cell.x == xPosition && cell.y == yPosition;
+    });
+    if(sharedPositions.length < 1){
+      getCellByPosition(xPosition, yPosition).addClass(CSS_CLASS.food);
+      FOOD_CELL = new Cell(xPosition, yPosition);
+    }
+    else {
+      generateFood();
     }
   }
 
@@ -143,6 +188,7 @@ $('document').ready(function(){
   function setup(){
     createGrid();
     createSnake();
+    generateFood();
     start();
   }
 
@@ -150,17 +196,33 @@ $('document').ready(function(){
     var newSnake = [];
     moveHead(newSnake);
     moveBody(newSnake);
+    eat(newSnake);
     SNAKE = newSnake;
   }
 
-  function moveHead(newSnake){
+  function eat(newSnake) {
+    var newHead = newSnake[0];
+    if(sameCell(FOOD_CELL, newHead)){
+      getCellByPosition(FOOD_CELL.x, FOOD_CELL.y).toggleClass(CSS_CLASS.food);
+      var movement = $.grep(MOVEMENTS, function(movement) {
+        return movement.direction == CURRENT_DIRECTION;
+      });
+      var newCell = movement[0].action(newHead);
+      getCellByPosition(newCell.x, newCell.y).toggleClass(CSS_CLASS.snake);
+      newSnake.unshift(newCell);
+      generateFood();
+    }
+    return newSnake;
+  }
+
+  function moveHead(newSnake) {
     var headCell = SNAKE[0];
     var movement = $.grep(MOVEMENTS, function(movement) {
       return movement.direction == CURRENT_DIRECTION;
     });
     var newCell = movement[0].action(headCell);
-    getCellByPosition(headCell.x, headCell.y).toggleClass(CSS_CLASS.head);
-    getCellByPosition(newCell.x, newCell.y).toggleClass(CSS_CLASS.head);
+    getCellByPosition(headCell.x, headCell.y).toggleClass(CSS_CLASS.snake);
+    getCellByPosition(newCell.x, newCell.y).toggleClass(CSS_CLASS.snake);
     newSnake.push(newCell);
   }
 
@@ -168,10 +230,14 @@ $('document').ready(function(){
     for (var i = 1; i < SNAKE.length; i++) {
       var currentPosition = SNAKE[i-1];
       var prevPosition = SNAKE[i];
-      getCellByPosition(currentPosition.x, currentPosition.y).toggleClass(CSS_CLASS.body);
-      getCellByPosition(prevPosition.x, prevPosition.y).toggleClass(CSS_CLASS.body);
+      getCellByPosition(currentPosition.x, currentPosition.y).toggleClass(CSS_CLASS.snake);
+      getCellByPosition(prevPosition.x, prevPosition.y).toggleClass(CSS_CLASS.snake);
       newSnake.push(currentPosition);
     }
+  }
+
+  function sameCell(a, b){
+    return (a.x == b.x && a.y == b.y)
   }
 
   $('body').on('keypress', function(e){

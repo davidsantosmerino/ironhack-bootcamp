@@ -39,10 +39,10 @@
   background-color: black;
 }
 
-.head {
+.snake {
   background-color: coral;
 }
 
-.body {
-  background-color: coral;
+.food {
+  background-color: yellow;
 }
