@@ -131,7 +131,8 @@ $(function () {
     var tracksContainer = $('.tracks.row');
     tracksContainer.empty();
     this.tracks.forEach(function(track){
-      var divElem = $('<div>').addClass('col-md-6').addClass('track').attr('data-track-id',track.id);;
+      var divElem = $('<div>').addClass('col-md-6 track');
+      divElem.attr('data-track-id',track.id);
       var nameElem = $('<p>').text(track.name);
       divElem.append(nameElem);
       var previewElem = $('<audio controls>').attr('src', track.preview_url);
