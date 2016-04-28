@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My spotify</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="app.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="header-container">
+        <div class="search-container">
+          <form class="search">
+            <div class="col-lg-12">
+              <div class="input-group">
+                <input type="search" class="form-control" id="search-input" placeholder="Search your favourite artist...">
+                <span class="input-group-btn">
+                  <input type="submit" class="btn btn-search" value="Go">
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="results-container container-fluid">
+
+      </div>
+      <div class="modal fade" id="albumsModal" class="albums-container" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <h4 class="modal-title">Albums</h4>
+           </div>
+            <div class="modal-body">
+              <div class="row albums">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="tracksModal" class="tracks-container" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <h4 class="modal-title">Tracks</h4>
+           </div>
+            <div class="modal-body">
+              <div class="row tracks">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

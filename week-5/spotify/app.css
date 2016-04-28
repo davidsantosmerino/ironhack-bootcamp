@@ -1,0 +1,60 @@
+.btn-search {
+  background-color: #2ebd59;
+  color: #fff;
+}
+
+.header-container{
+  background-color: #000;
+  width: 100%;
+  height: 100px;
+  margin-bottom: 40px;
+}
+
+.search-container{
+  margin: 0 auto;
+  width: 500px;
+  padding-top: 33px;
+}
+
+.artist {
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.artist .img-wrapper {
+  width: 250px;
+  height: 250px;
+}
+
+.artist img {
+  max-width: 250px;
+  max-height: 250px;
+}
+
+.artist p {
+  font-size: 1.4em;
+  font-weight: 300;
+}
+
+.album {
+  cursor: pointer;
+}
+
+.album img {
+  max-width: 250px;
+  max-height: 250px;
+}
+
+.album p {
+  font-size: 1.4em;
+  font-weight: 300;
+}
+
+.track span {
+  font-size: 1.4em;
+  font-weight: 300;
+}
+
+audio {
+  width: 45px;
+}
