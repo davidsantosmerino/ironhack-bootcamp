@@ -14,7 +14,7 @@
 
   SearchEngine.prototype.fetchTracks = function(query){
     var searchEngine = this;
-    var url = `https://api.spotify.com/v1/search?type=track&query=${query}`;
+    var url = `https://api.spotify.com/v1/search?type=track&query=${query}&limit=10`;
     $.get(url)
       .done(function(response){
         searchEngine.player.setPlayer(response);

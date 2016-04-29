@@ -75,11 +75,12 @@ form input[type="search"]::-webkit-input-placeholder {
 }
 
 .track-wrapper .title {
-  font-size: 1.4em;
+  font-size: 1.6em;
   font-weight: 300;
 }
 
 .track-wrapper .artist {
+  font-size: 1.2em;
   font-weight: 100;
 }
 
@@ -108,4 +109,32 @@ progress::-webkit-progress-value {
 
 progress::-moz-progress-bar {
   background-color: #2ebd59;
+}
+
+.playlist-wrapper ul {
+  list-style: none;
+}
+
+.playlist-wrapper ul li {
+  margin-bottom: 15px;
+}
+
+.playlist-wrapper ul li:hover {
+  cursor: pointer;
+  color: #2ebd59;
+}
+
+.playlist-wrapper ul li.active {
+  color: #2ebd59;
+}
+
+.playlist-wrapper .title {
+  font-size: 1.2em;
+  font-weight: 200;
+  padding-right: 10px;
+}
+
+.playlist-wrapper .artist {
+  font-size: 0.8em;
+  font-weight: 100;
 }

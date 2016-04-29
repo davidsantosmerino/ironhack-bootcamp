@@ -3,13 +3,15 @@
 
   var CSS_CLASS = {
     play: 'fa-play-circle-o',
-    pause: 'fa-pause-circle-o'
+    pause: 'fa-pause-circle-o',
+    active: 'active'
   }
 
   var ELEMENT = {
     playerBtn: '.js-btn-player',
     control: '.js-player',
-    progress: '.seekbar progress'
+    progress: '.seekbar progress',
+    playlist: '.playlist-wrapper ul'
   }
 
   var Player = function(){
@@ -18,6 +20,7 @@
     this.button = $(ELEMENT.playerBtn);
     this.control = $(ELEMENT.control);
     this.progress = $(ELEMENT.progress);
+    this.playlist = $(ELEMENT.playlist);
   }
 
   Player.prototype.init = function(){
@@ -28,6 +31,7 @@
     this.button.on('click', this.togglePlay.bind(this));
     this.control.on('timeupdate', updateProgress.bind(this));
     this.control.on('ended', this.resetStatus.bind(this));
+    this.playlist.on('click','li', changeMainTrack.bind(this));
   }
 
   Player.prototype.resetStatus = function(){
@@ -38,7 +42,9 @@
   Player.prototype.setPlayer = function(response){
     this.resetStatus();
     this.trackManager.setTrackManager(response);
-    this.trackManager.render();
+    this.playlistRender();
+    var firsTrack = $('.playlist-wrapper ul li:first-child');
+    this.setMainTrack(firsTrack);
   }
 
   Player.prototype.togglePlay = function(){
@@ -47,6 +53,32 @@
       this.stop();
     else
       this.start();
+  }
+
+  Player.prototype.setMainTrack = function(trackElement) {
+    var player = this;
+    var trackManager = player.trackManager;
+    player.resetStatus();
+    resetActivePlaylistElements.bind(this.playlist)();
+    var trackId = trackElement.attr('data-id');
+    trackElement.addClass(CSS_CLASS.active);
+    trackManager.tracks[trackId].render(trackId);
+  }
+
+  Player.prototype.playlistRender = function(){
+    var tracks = this.trackManager.tracks;
+    var playlistUl = $('.playlist-wrapper ul');
+    playlistUl.empty();
+    tracks.forEach(function(track, index){
+      var liElement = $('<li>');
+      liElement.attr('data-id', index);
+      var spanTitle = $('<span class="title">');
+      spanTitle.text(track.title);
+      var spanArtist= $('<span class="artist">');
+      spanArtist.text(track.artist);
+      liElement.append(spanTitle, spanArtist);
+      playlistUl.append(liElement);
+    });
   }
 
   Player.prototype.start = function(){
@@ -83,6 +115,16 @@
     button.addClass(CSS_CLASS.play);
   }
 
+  function changeMainTrack(event) {
+    var player = this;
+    var trackElement = $(event.currentTarget);
+    player.setMainTrack.bind(player)(trackElement);
+  }
+
+  function resetActivePlaylistElements() {
+    var playlist = this;
+    playlist.find('li').removeClass(CSS_CLASS.active);
+  }
 
   window.SpotifyApp.Player = Player;
 })();

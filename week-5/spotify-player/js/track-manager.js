@@ -21,10 +21,5 @@
     });
   }
 
-  TrackManager.prototype.render = function(){
-    if(this.tracks.length > 0)
-      this.tracks[0].render();
-  }
-
   window.SpotifyApp.Managers.TrackManager = TrackManager;
 })();
