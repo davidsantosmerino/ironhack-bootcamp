@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/index.css" media="screen" charset="utf-8">
     <script
-    src="js/jquery.min.js" charset="utf-8"</script>
+    src="https://code.jquery.com/jquery-2.2.3.min.js"
+    integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="
+    crossorigin="anonymous"></script>
     <script
     src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
     integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
@@ -27,7 +29,7 @@
         <div class="search-container col-md-6 col-md-offset-3">
           <form class="search">
             <div class="input-group">
-              <input type="search" class="form-control" id="search-input" placeholder="Search your favourite artist...">
+              <input type="search" autofocus autocomplete="off" class="form-control" id="search-input" placeholder="Type here...">
               <span class="input-group-btn">
                 <button class="btn btn-transparent" type="submit"><i class="fa fa-search fa-lg" aria-hidden="true"></i></button>
               </span>
@@ -36,6 +38,10 @@
         </div>
       </div>
       <div class="row">
+        <div class="no-results">
+          <i class="fa fa-headphones fa-3x" aria-hidden="true"></i>
+          <p>let's find something amazing</p>
+        </div>
         <div class="track-wrapper col-md-6" style="display:none">
           <div class="col-md-2">
             <i class="js-btn-player btn-play fa fa-5x fa-play-circle-o disabled" aria-hidden="true"></i>
@@ -50,7 +56,6 @@
               <img src="#" class="js-cover" />
             </div>
             <audio controls src="#" class="js-player no-visible">
-
             </audio>
           </div>
         </div>
@@ -60,5 +65,10 @@
         </div>
       </div>
     </div>
+    <footer>
+      <p>by
+        <a href="https://github.com/davidsantosmerino"> David Santos Merino</a>
+      </p>
+    </footer>
   </body>
 </html>

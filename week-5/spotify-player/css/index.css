@@ -1,10 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Shadows+Into+Light);
+
 body {
   background-color: #333;
   color: #fff;
 }
 
 .row {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .no-visible {
@@ -12,7 +14,6 @@ body {
 }
 
 .main-container {
-  margin: 10px;
   width: 100%;
 }
 
@@ -47,20 +48,29 @@ form input[type="search"]::-webkit-input-placeholder {
 
 .btn-transparent {
   background: transparent;
-  color: #f5f5f5;
+  color: #fff;
 }
 
 .btn-transparent:hover {
-  color: #fff;
+  opacity: 0.8;
+}
+
+.no-results {
+  padding-top: 100px;
+  font-family: 'Shadows Into Light', cursive;
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: 200;
+  color: #2ebd59;
 }
 
 .btn-play {
   cursor: pointer;
-  color: #fff;
+  color: #2ebd59;
 }
 
 .btn-play:hover {
-  color: #2ebd59;
+  opacity: 0.8;
 }
 
 .track-wrapper {
@@ -85,6 +95,11 @@ form input[type="search"]::-webkit-input-placeholder {
 .track-wrapper .artist {
   font-size: 1.2em;
   font-weight: 100;
+  max-width: 80%;
+  text-overflow: ellipsis;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .seekbar {
@@ -129,7 +144,7 @@ progress::-moz-progress-bar {
 
 .playlist-wrapper ul li:hover {
   cursor: pointer;
-  color: #2ebd59;
+  opacity: 0.8;
 }
 
 .playlist-wrapper ul li.active {
@@ -140,9 +155,31 @@ progress::-moz-progress-bar {
   font-size: 1.2em;
   font-weight: 200;
   padding-right: 10px;
+  vertical-align: text-bottom;
 }
 
 .playlist-wrapper .artist {
   font-size: 0.8em;
   font-weight: 100;
+  max-width: 80%;
+  vertical-align: text-bottom;
+  text-overflow: ellipsis;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+footer {
+  margin-top: 10px;
+  font-size: 0.9em;
+  font-weight: 100;
+  text-align: center;
+}
+
+footer a {
+  color: #fff;
+}
+
+footer a:hover {
+  color: #2ebd59;
 }
