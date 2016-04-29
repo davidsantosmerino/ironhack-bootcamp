@@ -1,6 +1,7 @@
 (function(){
   window.SpotifyApp = window.SpotifyApp || {};
 
+  var RESULTS_LIMIT = 14;
 
   var SearchEngine = function(){
     var Player = window.SpotifyApp.Player;
@@ -14,7 +15,7 @@
 
   SearchEngine.prototype.fetchTracks = function(query){
     var searchEngine = this;
-    var url = `https://api.spotify.com/v1/search?type=track&query=${query}&limit=10`;
+    var url = `https://api.spotify.com/v1/search?type=track&query=${query}&limit=${RESULTS_LIMIT}`;
     $.get(url)
       .done(function(response){
         searchEngine.player.setPlayer(response);

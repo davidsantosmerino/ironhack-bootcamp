@@ -3,6 +3,10 @@ body {
   color: #fff;
 }
 
+.row {
+  margin-bottom: 15px;
+}
+
 .no-visible {
   display: none;
 }
@@ -70,8 +74,7 @@ form input[type="search"]::-webkit-input-placeholder {
 }
 
 .track-wrapper img {
-  max-width: 250px;
-  max-height: 250px;
+  max-width: 90%;
 }
 
 .track-wrapper .title {
@@ -109,6 +112,11 @@ progress::-webkit-progress-value {
 
 progress::-moz-progress-bar {
   background-color: #2ebd59;
+}
+
+.playlist-wrapper {
+  margin: 0 auto;
+  max-width: 90%;
 }
 
 .playlist-wrapper ul {
