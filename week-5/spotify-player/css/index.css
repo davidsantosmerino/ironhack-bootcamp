@@ -60,7 +60,7 @@ form input[type="search"]::-webkit-input-placeholder {
   opacity: 0.8;
 }
 
-.no-results {
+.notification {
   padding-top: 100px;
   font-family: 'Shadows Into Light', cursive;
   text-align: center;

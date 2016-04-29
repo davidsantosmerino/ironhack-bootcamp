@@ -4,14 +4,15 @@
   var CSS_CLASS = {
     play: 'fa-play-circle-o',
     pause: 'fa-pause-circle-o',
-    active: 'active'
+    active: 'active',
   }
 
   var ELEMENT = {
     playerBtn: '.js-btn-player',
     control: '.js-player',
     progress: '.seekbar progress',
-    playlist: '.playlist-wrapper ul'
+    playlist: '.playlist-wrapper ul',
+    trackWrapper: '.track-wrapper',
   }
 
   var Player = function(){
@@ -39,9 +40,21 @@
     resetProgress.bind(this.progress)();
   }
 
-  Player.prototype.setPlayer = function(response){
-    this.resetStatus();
+  Player.prototype.setPlayerReady = function(response) {
     this.trackManager.setTrackManager(response);
+    if(this.trackManager.tracks.length > 0)
+      this.fetchPlayer();
+    else
+      this.setNoResults();
+  }
+
+  Player.prototype.setNoResults = function(){
+    $(ELEMENT.trackWrapper).hide();
+    this.playlist.empty();
+  }
+
+  Player.prototype.fetchPlayer = function(){
+    this.resetStatus();
     this.playlistRender();
     var firsTrack = $('.playlist-wrapper ul li:first-child');
     this.setMainTrack(firsTrack);
@@ -67,8 +80,8 @@
 
   Player.prototype.playlistRender = function(){
     var tracks = this.trackManager.tracks;
-    var playlistUl = $('.playlist-wrapper ul');
-    playlistUl.empty();
+    this.playlist.empty();
+    var elements = [];
     tracks.forEach(function(track, index){
       var liElement = $('<li>');
       liElement.attr('data-id', index);
@@ -77,8 +90,9 @@
       var spanArtist= $('<span class="artist">');
       spanArtist.text(track.artist);
       liElement.append(spanTitle, spanArtist);
-      playlistUl.append(liElement);
+      elements.push(liElement);
     });
+    this.playlist.append(elements);
   }
 
   Player.prototype.start = function(){
