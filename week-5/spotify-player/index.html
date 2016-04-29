@@ -22,34 +22,36 @@
     <script src="js/player.js" charset="utf-8"></script>
   </head>
   <body>
-    <div class="main-container">
-      <div class="header-container">
-        <div class="search-container">
+    <div class="main-container container">
+      <div class="row">
+        <div class="search-container col-md-6 col-md-offset-3">
           <form class="search">
-            <div class="col-lg-12">
-              <div class="input-group">
-                <input type="search" class="form-control" id="search-input" placeholder="Search your favourite artist...">
-                <span class="input-group-btn">
-                  <input type="submit" class="btn btn-search" value="Go">
-                </span>
-              </div>
+            <div class="input-group">
+              <input type="search" class="form-control" id="search-input" placeholder="Search your favourite artist...">
+              <span class="input-group-btn">
+                <button class="btn btn-transparent" type="submit"><i class="fa fa-search fa-lg" aria-hidden="true"></i></button>
+              </span>
             </div>
           </form>
         </div>
       </div>
-      <div class="track-wrapper" style="display:none">
-        <i class="js-btn-player btn-play fa fa-5x fa-play-circle-o disabled" aria-hidden="true"></i>
-  		  <div class="seekbar">
-  		    <progress value="0" max="30"></progress>
-  		  </div>
-        <p class="js-title title"></p>
-        <p class="js-artist artist"></p>
-        <div class="img-wrapper">
-          <img src="#" class="js-cover" />
-        </div>
-        <audio controls src="#" class="js-player no-visible">
+      <div class="row">
+        <div class="track-wrapper col-md-6 col-md-offset-1" style="display:none">
+          <i class="js-btn-player btn-play fa fa-5x fa-play-circle-o disabled" aria-hidden="true"></i>
+    		  <div class="seekbar">
+    		    <progress value="0" max="30"></progress>
+    		  </div>
+          <p class="js-title title"></p>
+          <p class="js-artist artist"></p>
+          <div class="img-wrapper">
+            <img src="#" class="js-cover" />
+          </div>
+          <audio controls src="#" class="js-player no-visible">
 
-        </audio>
+          </audio>
+        </div>
+        <div class="playlist-wrapper col-md-4">
+        </div>
       </div>
     </div>
   </body>

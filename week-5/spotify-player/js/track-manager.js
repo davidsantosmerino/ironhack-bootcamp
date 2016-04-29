@@ -11,22 +11,8 @@
     this.tracks = [];
   }
 
-  function enableAudioPlayer(){
-    $('.btn-play').removeClass('disabled');
-  }
-
-  function disableAudioPlayer(){
-    $('.btn-play').addClass('disabled');
-  }
-
-  TrackManager.prototype.tooglePlayer = function(){
-    if(this.tracks[0].preview_url === null)
-      disableAudioPlayer();
-    else
-      enableAudioPlayer();
-  }
-
   TrackManager.prototype.setTrackManager = function(response){
+    this.tracks = [];
     var taskManager = this;
     var items = response.tracks.items;
     items.forEach(function(item){
@@ -36,10 +22,8 @@
   }
 
   TrackManager.prototype.render = function(){
-    this.tooglePlayer();
-    this.tracks.forEach(function(track){
-      track.render();
-    });
+    if(this.tracks.length > 0)
+      this.tracks[0].render();
   }
 
   window.SpotifyApp.Managers.TrackManager = TrackManager;
