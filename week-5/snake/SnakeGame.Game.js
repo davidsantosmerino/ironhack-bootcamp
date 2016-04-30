@@ -6,15 +6,18 @@ $(function () {
   var Entities = window.SnakeGame.Entities;
   var Cell = Entities.Cell;
 
-  var CURRENT_DIRECTION = Constants.direction.left;
 
   var Game = function(){
     var game = this;
-    game.snake = [];
-    game.intervalId = 0;
-    game.gamePause = false;
-    game.foodCell = null;
-    game.inputs = [
+    this.rowSize = Constants.size.row;
+    this.columnSize = Constants.size.column;
+    this.configuration = new Configuration(this.rowSize, this.columnSize);
+    this.snake = [];
+    this.currentDirection = Constants.direction.left;
+    this.intervalId = 0;
+    this.gamePause = false;
+    this.foodCell = null;
+    this.inputs = [
       new Entities.Input(
         Constants.keyCode.left,
         Constants.direction.left,
@@ -50,15 +53,15 @@ $(function () {
 
   Game.prototype.setup = function(){
     this.addListeners();
-    createGrid();
-    createSnake.bind(this)();
-    generateFood.bind(this)();
+    this.createGrid();
+    this.createSnake();
+    this.generateFood();
     this.start();
   }
 
   Game.prototype.setCurrentDirection = function(direction){
-    if(direction.oposite !== CURRENT_DIRECTION){
-      CURRENT_DIRECTION = direction.direction;
+    if(direction.oposite !== this.currentDirection){
+      this.currentDirection = direction.direction;
     }
   }
 
@@ -73,11 +76,12 @@ $(function () {
   }
 
   Game.prototype.move = function(){
-    var game = this;
     var newSnake = [];
-    moveHead.bind(game)(newSnake);
-    moveBody.bind(game)(newSnake);
+    moveHead.bind(this)(newSnake);
+    moveBody.bind(this)(newSnake);
     this.eat(newSnake);
+    eraseSnake(this.snake);
+    drawSnake(newSnake);
     this.snake = newSnake;
   }
 
@@ -106,11 +110,11 @@ $(function () {
     clearInterval(game.intervalId);
   }
 
-  Game.prototype.start = function(){
+  Game.prototype.start = function() {
     this.intervalId = setInterval(this.move.bind(this), 300);
   }
 
-  function createGrid() {
+  Game.prototype.createGrid = function() {
     for (var i = 0; i < Constants.size.column ; i++) {
       for (var j = 0; j < Constants.size.row; j++) {
         var pixel = $('<div>');
@@ -122,7 +126,7 @@ $(function () {
     }
   }
 
-  function createSnake() {
+  Game.prototype.createSnake = function() {
     var game = this;
     var rowPosition = Math.floor(Constants.size.row / 2);
     var columnPosition = Math.floor(Constants.size.column / 2);
@@ -135,7 +139,7 @@ $(function () {
     }
   }
 
-  function generateFood() {
+  Game.prototype.generateFood = function() {
     var game = this;
     var foodCell = new Cell(Math.floor(Math.random() * Constants.size.row), Math.floor(Math.random() * Constants.size.column));
     var sharedPositions = $.grep(game.snake, function(cell) {
@@ -146,46 +150,57 @@ $(function () {
       game.foodCell = new Cell(foodCell.x, foodCell.y);
     }
     else {
-      generateFood.bind(game)();
+      game.generateFood();
     }
+  }
+
+  Game.prototype.eat = function(newSnake) {
+    var game = this;
+    var newHead = newSnake[0];
+    if(sameCell(this.foodCell, newHead)){
+      getCellByPosition(this.foodCell.x, this.foodCell.y).removeClass(Constants.cssClass.food);
+      var movement = $.grep(game.configuration.movements, function(movement) {
+        return movement.direction == game.currentDirection;
+      });
+      var newCell = movement[0].action(newHead);
+      newSnake.unshift(newCell);
+      this.generateFood();
+    }
+    return newSnake;
   }
 
   function getCellByPosition(x, y){
     return $(`[${Constants.htmlData.x}='${x}'][${Constants.htmlData.y}='${y}']`);
   }
 
-  Game.prototype.eat = function(newSnake) {
-    var newHead = newSnake[0];
-    if(sameCell(this.foodCell, newHead)){
-      getCellByPosition(this.foodCell.x, this.foodCell.y).toggleClass(Constants.cssClass.food);
-      var movement = $.grep(Configuration.movement, function(movement) {
-        return movement.direction == CURRENT_DIRECTION;
-      });
-      var newCell = movement[0].action(newHead);
-      getCellByPosition(newCell.x, newCell.y).toggleClass(Constants.cssClass.snake);
-      newSnake.unshift(newCell);
-      generateFood.bind(this)();
-    }
-    return newSnake;
+  function eraseSnake(snake){
+    snake.forEach(function(cell){
+      getCellByPosition(cell.x, cell.y).removeClass(Constants.cssClass.snake);
+    });
+  }
+
+  function drawSnake(snake){
+    snake.forEach(function(cell){
+      getCellByPosition(cell.x, cell.y).addClass(Constants.cssClass.snake);
+    });
   }
 
   function moveHead(newSnake) {
-    var snake = this.snake;
+    var game = this;
+    var snake = game.snake;
     var headCell = snake[0];
-    var movement = $.grep(Configuration.movement, function(movement) {
-      return movement.direction == CURRENT_DIRECTION;
+    var movement = $.grep(game.configuration.movements, function(movement) {
+      return movement.direction == game.currentDirection;
     });
     var newCell = movement[0].action(headCell);
     var sharedPositions = $.grep(snake, function(cell) {
       return sameCell(cell, newCell);
     });
     if(sharedPositions.length < 1){
-      getCellByPosition(headCell.x, headCell.y).toggleClass(Constants.cssClass.snake);
-      getCellByPosition(newCell.x, newCell.y).toggleClass(Constants.cssClass.snake);
       newSnake.push(newCell);
     }
     else{
-      this.gameOver();
+      game.gameOver();
     }
   }
 
@@ -194,8 +209,6 @@ $(function () {
     for (var i = 1; i < snake.length; i++) {
       var currentPosition = snake[i-1];
       var prevPosition = snake[i];
-      getCellByPosition(currentPosition.x, currentPosition.y).toggleClass(Constants.cssClass.snake);
-      getCellByPosition(prevPosition.x, prevPosition.y).toggleClass(Constants.cssClass.snake);
       newSnake.push(currentPosition);
     }
   }
