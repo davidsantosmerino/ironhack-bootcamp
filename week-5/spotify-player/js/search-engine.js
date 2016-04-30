@@ -26,7 +26,7 @@
     var url = `https://api.spotify.com/v1/search?type=track&query=${query}&limit=${RESULTS_LIMIT}`;
     $.get(url)
       .done(function(response){
-        setAppReady.bind(searchEngine)(response);
+        setResponse.bind(searchEngine)(response);
       })
       .fail(function(error){
         this.showNoResults();
@@ -38,7 +38,6 @@
     this.form.on('submit', function (e) {
       e.preventDefault();
       var query = this.searchInput.val();
-      this.searchInput.val('');
       this.fetchTracks(query);
     }.bind(this));
   }
@@ -55,7 +54,7 @@
     $(ELEMENT.welcome).slideUp('down');
   }
 
-  function setAppReady(response){
+  function setResponse(response){
     var searchEngine = this;
     var items = response.tracks.items;
     searchEngine.hideWelcome();
