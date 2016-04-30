@@ -29,6 +29,7 @@
   }
 
   Player.prototype.addListeners = function(){
+    $(document).on('keypress', setSpaceAsPlay.bind(this));
     this.button.on('click', this.togglePlay.bind(this));
     this.control.on('timeupdate', updateProgress.bind(this));
     this.control.on('ended', this.resetStatus.bind(this));
@@ -103,6 +104,12 @@
   Player.prototype.stop = function(){
     this.control.trigger('pause');
     setPlayIcon.bind(this.button)();
+  }
+
+  function setSpaceAsPlay(event){
+    var player = this;
+    if(event.which === 32)
+      player.togglePlay();
   }
 
   function updateProgress(){
