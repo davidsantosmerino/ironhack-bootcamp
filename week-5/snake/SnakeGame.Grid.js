@@ -1,6 +1,6 @@
 (function(){
   var SnakeGame = window.SnakeGame = window.SnakeGame || {};
-  var Constants = SnakeGame.Constants = SnakeGame.Constants || {};
+  var Constants = SnakeGame.Constants;
 
   var Grid = function(){
     this.width = $(document).width();
@@ -13,11 +13,11 @@
   }
 
   function getRowSize(width){
-    return Math.floor((width * 0.98) / Constants.cellSize);
+    return Math.floor((width * Constants.gridPercentage) / Constants.cellSize);
   }
 
   function getColumnSize(height){
-    return Math.floor((height * 0.98) / Constants.cellSize);
+    return Math.floor((height * Constants.gridPercentage) / Constants.cellSize);
   }
 
   window.SnakeGame.Grid = Grid;

@@ -4,19 +4,24 @@
     <link rel="stylesheet" href="app.css">
     <script src="SnakeGame.Constants.js" charset="utf-8"></script>
     <script src="SnakeGame.Entities.js" charset="utf-8"></script>
+    <script src="SnakeGame.Helpers.js" charset="utf-8"></script>
     <script src="SnakeGame.Configuration.js" charset="utf-8"></script>
     <script src="SnakeGame.Grid.js" charset="utf-8"></script>
+    <script src="SnakeGame.Snake.js" charset="utf-8"></script>
     <script src="SnakeGame.Game.js" charset="utf-8"></script>
     <script src="init.js" charset="utf-8"></script>
   </head>
   <body>
     <div class="main-container">
     </div>
-    <div class="pause-container message-container no-visible">
-      <span>PAUSE</span>
+    <div class="pause-container message-container background-dark no-visible">
+      <span class="flickr slow">PAUSE</span>
     </div>
-    <div class="game-over-container message-container no-visible">
+    <div class="game-over-container message-container background-dark no-visible">
       <span>GAME OVER</span>
+    </div>
+    <div class="level-up-container message-container background-light no-visible">
+      <span class="flickr fast">LEVEL UP</span>
     </div>
   </body>
 </html>

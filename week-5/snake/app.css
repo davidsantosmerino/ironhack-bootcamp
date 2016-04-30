@@ -11,17 +11,39 @@
   width: 100%;
   height: 100%;
   position: relative;
-  text-align: center;
-  vertical-align: middle;
-  background-color: black;
-  opacity: 0.6;
+}
+
+.message-container.background-dark {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.message-container.background-light {
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .message-container span {
   border: 5px solid white;
   padding: 20px;
-  top:0; left:0; bottom:0; right:0;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  position: absolute;
   margin: auto;
+  transform: translate(-50%, -50%);
+}
+
+.flickr.slow {
+  animation: toggleOpacity 3s linear infinite;
+}
+
+.flickr.fast {
+  animation: toggleOpacity 0.5s linear infinite;
+}
+
+@keyframes toggleOpacity {
+  0% { opacity: 0.85; }
+  50% { opacity: 0.5; }
+  99% { opacity: 0.1; }
 }
 
 .main-container div {
