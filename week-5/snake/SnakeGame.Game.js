@@ -1,4 +1,4 @@
-$(function () {
+(function () {
   window.SnakeGame = window.SnakeGame || {};
 
   var Constants = window.SnakeGame.Constants;
@@ -7,11 +7,10 @@ $(function () {
   var Cell = Entities.Cell;
 
 
-  var Game = function(){
+  var Game = function(grid){
     var game = this;
-    this.rowSize = Constants.size.row;
-    this.columnSize = Constants.size.column;
-    this.configuration = new Configuration(this.rowSize, this.columnSize);
+    this.grid = grid;
+    this.configuration = new Configuration(this.grid.rowSize, this.grid.columnSize);
     this.snake = [];
     this.currentDirection = Constants.direction.left;
     this.intervalId = 0;
@@ -53,7 +52,7 @@ $(function () {
 
   Game.prototype.setup = function(){
     this.addListeners();
-    this.createGrid();
+    this.drawGrid();
     this.createSnake();
     this.generateFood();
     this.start();
@@ -114,9 +113,9 @@ $(function () {
     this.intervalId = setInterval(this.move.bind(this), 300);
   }
 
-  Game.prototype.createGrid = function() {
-    for (var i = 0; i < Constants.size.column ; i++) {
-      for (var j = 0; j < Constants.size.row; j++) {
+  Game.prototype.drawGrid = function() {
+    for (var i = 0; i < this.grid.columnSize ; i++) {
+      for (var j = 0; j < this.grid.rowSize; j++) {
         var pixel = $('<div>');
         pixel.addClass(Constants.cssClass.cell);
         pixel.attr(Constants.htmlData.x, j);
@@ -128,8 +127,8 @@ $(function () {
 
   Game.prototype.createSnake = function() {
     var game = this;
-    var rowPosition = Math.floor(Constants.size.row / 2);
-    var columnPosition = Math.floor(Constants.size.column / 2);
+    var rowPosition = Math.floor(game.grid.rowSize / 2);
+    var columnPosition = Math.floor(game.grid.columnSize / 2);
     var headCell = new Cell(rowPosition, columnPosition);
     for (var i = headCell.x; i < headCell.x + 5; i++) {
       var classType = (i === headCell.x) ? Constants.cssClass.snake : Constants.cssClass.snake;
@@ -141,7 +140,10 @@ $(function () {
 
   Game.prototype.generateFood = function() {
     var game = this;
-    var foodCell = new Cell(Math.floor(Math.random() * Constants.size.row), Math.floor(Math.random() * Constants.size.column));
+    var foodCell = new Cell(
+      Math.floor(Math.random() * game.grid.rowSize ),
+      Math.floor(Math.random() * game.grid.columnSize )
+    )
     var sharedPositions = $.grep(game.snake, function(cell) {
       return sameCell(cell, foodCell);
     });
@@ -218,4 +220,4 @@ $(function () {
   }
 
   window.SnakeGame.Game = Game;
-})
+})();

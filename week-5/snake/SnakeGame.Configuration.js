@@ -1,4 +1,4 @@
-$(function(){
+(function(){
   window.SnakeGame = window.SnakeGame || {};
   var Game = window.SnakeGame.Game;
   var Entities = window.SnakeGame.Entities;
@@ -51,4 +51,4 @@ $(function(){
   }
 
   window.SnakeGame.Configuration = Configuration;
-});
+})();

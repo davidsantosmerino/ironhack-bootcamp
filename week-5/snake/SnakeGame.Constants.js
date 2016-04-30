@@ -26,9 +26,6 @@
       down: 115,
       space: 32
     },
-    size: {
-      row: 10,
-      column: 10
-    }
+    cellSize: 20
   }
 })();
