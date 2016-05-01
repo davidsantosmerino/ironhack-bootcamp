@@ -15,7 +15,6 @@
     this.form = $(ELEMENT.form);
     this.currentPosition;
     this.currentInput;
-    this.markers = localStorage.getItem('markers') || [];
   }
 
   MapsApp.prototype.init = function () {
@@ -32,6 +31,7 @@
       mapsApp.createMap();
       mapsApp.setAutocomplete();
       mapsApp.addListeners();
+      mapsApp.loadMarkers();
       $(ELEMENT.loadingContainer).fadeOut();
       mapsApp.mapContainer.fadeIn();
     }
@@ -48,7 +48,7 @@
       var place = mapsApp.currentInput;
       if (place.geometry.location) {
         mapsApp.map.setCenter(place.geometry.location);
-        mapsApp.addMarker(place.geometry.location);
+        mapsApp.saveMarker(place.geometry.location);
         mapsApp.map.setZoom(5);
       }
       else {
@@ -59,7 +59,8 @@
 
   MapsApp.prototype.loadMarkers = function() {
     var mapsApp = this;
-    this.markers.forEach(function(marker){
+    var markers = JSON.parse(localStorage.getItem('markers')) || [];
+    markers.forEach(function(marker){
       mapsApp.addMarker(marker);
     });
   }
@@ -69,7 +70,6 @@
       center: this.currentPosition,
       zoom: 5
     });
-    this.addMarker(this.currentPosition);
   }
 
   MapsApp.prototype.setAutocomplete = function () {
@@ -83,7 +83,10 @@
 
   MapsApp.prototype.saveMarker = function (position) {
     this.addMarker(position);
-    this.markers.push(marker);
+    debugger;
+    var markers = JSON.parse(localStorage.getItem('markers')) || [];
+    markers.push(position);
+    localStorage.setItem('markers', JSON.stringify(markers));
   }
 
   MapsApp.prototype.addMarker = function (position) {
@@ -91,6 +94,7 @@
         position: position,
         map: this.map
     });
+    return marker;
   }
 
   window.MapsApp = MapsApp;
