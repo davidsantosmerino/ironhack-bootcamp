@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe IngredientsController, type: :controller do
+RSpec.describe Api::IngredientsController, type: :controller do
 
 end
