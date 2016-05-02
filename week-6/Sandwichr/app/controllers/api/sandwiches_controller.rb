@@ -15,6 +15,14 @@ class Api::SandwichesController < ApplicationController
       render json: { errors: sandwich.errors.full_messages }, status: 422
     end
   end
+  def update
+    sandwich = Sandwich.find(params[:id])
+    if sandwich.update(sandwich_params)
+      render json: sandwich, status: :ok
+    else
+      render json: { errors: sandwich.errors.full_messages }, status: 422
+    end
+  end
 
   private
   def sandwich_params
