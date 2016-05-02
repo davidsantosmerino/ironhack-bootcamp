@@ -1,5 +1,5 @@
 class Api::SandwichesController < ApplicationController
-  before_action :ensure_sandwich, only: [:show, :update, :destroy]
+  before_action :ensure_sandwich, only: [:show, :details, :update, :add_ingredients, :destroy]
 
   def index
     sandwiches = Sandwich.all
@@ -7,6 +7,9 @@ class Api::SandwichesController < ApplicationController
   end
   def show
     render json: @sandwich
+  end
+  def details
+    render json: @sandwich.to_json({:include => :ingredients})
   end
   def create
     sandwich = Sandwich.new(sandwich_params)
@@ -22,6 +25,9 @@ class Api::SandwichesController < ApplicationController
     else
       render json: { errors: @sandwich.errors.full_messages }, status: 422
     end
+  end
+  def add_ingredients
+
   end
   def destroy
      render json: @sandwich.destroy
