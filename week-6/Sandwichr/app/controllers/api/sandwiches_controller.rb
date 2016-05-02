@@ -1,6 +1,6 @@
 class Api::SandwichesController < ApplicationController
   before_action :ensure_sandwich, only: [:show, :details, :update, :add_ingredients, :destroy]
-
+  before_action :ensure_ingredient, only: [:add_ingredients]
   def index
     sandwiches = Sandwich.all
     render json: sandwiches
@@ -27,7 +27,11 @@ class Api::SandwichesController < ApplicationController
     end
   end
   def add_ingredients
-
+    if @sandwich.ingredients.push(@ingredient)
+      render json: @sandwich.to_json({:include => :ingredients})
+    else
+      render json: { errors: sandwich.errors.full_messages }, status: 422
+    end
   end
   def destroy
      render json: @sandwich.destroy
@@ -43,5 +47,12 @@ class Api::SandwichesController < ApplicationController
       json: { errors: "Sandwich with id #{params[:id]} not found" },
       status: 404
     ) unless @sandwich
+  end
+  def ensure_ingredient
+    @ingredient = Ingredient.find_by(id: params[:ingredient_id])
+    render(
+      json: { errors: "Ingredient with id #{params[:ingredient_id]} not found" },
+      status: 404
+    ) unless @ingredient
   end
 end
