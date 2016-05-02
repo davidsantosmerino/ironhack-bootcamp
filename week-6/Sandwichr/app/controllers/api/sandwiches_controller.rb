@@ -13,6 +13,7 @@ class Api::SandwichesController < ApplicationController
     if sandwich.save
       render json: sandwich, status: :created
     else
+      render json: { errors: sandwich.errors.full_messages }, status: 422
     end
   end
   def update
