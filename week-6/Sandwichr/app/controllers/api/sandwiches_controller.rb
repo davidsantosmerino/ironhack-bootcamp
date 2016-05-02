@@ -1,5 +1,5 @@
 class Api::SandwichesController < ApplicationController
-  before_action :ensure_sandwich, only: [:show, :update]
+  before_action :ensure_sandwich, only: [:show, :update, :destroy]
 
   def index
     sandwiches = Sandwich.all
@@ -22,12 +22,19 @@ class Api::SandwichesController < ApplicationController
       render json: { errors: @sandwich.errors.full_messages }, status: 422
     end
   end
+  def destroy
+     render json: @sandwich.destroy
+  end
+
   private
   def sandwich_params
     params.require(:sandwich).permit(:name, :bread_type)
   end
   def ensure_sandwich
-    @sandwich = Sandwich.find(params[:id])
-    render json: { errors: sandwich.errors.full_messages }, status: 422 unless @sandwich
+    @sandwich = Sandwich.find_by(id: params[:id])
+    render(
+      json: { errors: "Sandwich with id #{params[:id]} not found" },
+      status: 404
+    ) unless @sandwich
   end
 end
