@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160502100712) do
+ActiveRecord::Schema.define(version: 20160502132453) do
 
   create_table "ingredients", force: :cascade do |t|
     t.string   "name"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20160502100712) do
     t.string   "bread_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "total_calories", default: 0
   end
 
 end
