@@ -20,7 +20,6 @@
     this.addButton.on('click', function(e){
       var sandwichId = sandwichr.sandwichElem.attr('data-sandwich-id');
       var ingredientId = $(e.currentTarget).attr('data-ingredient-id');
-      debugger;
       sandwichr.addIngredient(sandwichId, ingredientId);
     })
   }
@@ -30,13 +29,11 @@
     var data = {
       ingredient_id: ingredientId
     }
-    debugger;
     $.post(url, data)
       .done(function(){
         location.reload();
       })
       .fail(function(e){
-        debugger;
         console.log(e.responseText);
       });
   };
