@@ -15,25 +15,6 @@ RSpec.describe Api::SandwichesController, type: :controller do
     sandwich
   }
 
-  # Shared examples
-  #
-  RSpec.shared_examples "an success" do
-    it "renders json with code 200" do
-      expect(response.content_type).to eq "application/json"
-      expect(response.code).to eq "200"
-    end
-  end
-
-  RSpec.shared_examples "an error handler" do
-    it "renders json with code 404" do
-      expect(response.content_type).to eq "application/json"
-      expect(response.code).to eq "404"
-    end
-    it "renders an error message" do
-      expect(response.body).to include "Sandwich with id #{invalid_id} not found"
-    end
-  end
-
   # GET index
   #
   describe "#index" do
@@ -41,7 +22,7 @@ RSpec.describe Api::SandwichesController, type: :controller do
 
     it_behaves_like "an success"
 
-    it "renders all sandwiches" do
+    it "render all sandwiches" do
       expect(response.body).to include blt_sandwich.name
       expect(response.body).to include tuna_sandwich.name
     end
@@ -55,7 +36,7 @@ RSpec.describe Api::SandwichesController, type: :controller do
 
       it_behaves_like "an success"
 
-      it "renders the sandwich" do
+      it "render the sandwich" do
         expect(response.body).to include blt_sandwich.name
         expect(response.body).to include blt_sandwich.bread_type
       end
@@ -74,17 +55,13 @@ RSpec.describe Api::SandwichesController, type: :controller do
       let(:new_name) { "bacon" }
       before { post :create, sandwich: sandwich, format: :json }
 
-      it "renders json with code 201" do
+      it "render json with code 201" do
         expect(response.content_type).to eq "application/json"
         expect(response.code).to eq "201"
       end
 
-      it "renders the sandwich" do
+      it "render the sandwich" do
         expect(response.body).to include new_name
-      end
-
-      it "saves the Sandwich to the database" do
-        expect(Sandwich.count).to eql 3
       end
     end
 
@@ -92,86 +69,70 @@ RSpec.describe Api::SandwichesController, type: :controller do
       let(:new_name) { "ab" }
       before { post :create, sandwich: sandwich, format: :json }
 
-      it "renders json with code 422" do
+      it "render json with code 422" do
         expect(response.content_type).to eq "application/json"
         expect(response.code).to eq "422"
       end
 
-      it "renders an error message" do
+      it "render an error message" do
         expect(response.body).to include "Name is too short"
-      end
-
-      it "does not save the Sandwich to the database" do
-        expect(Sandwich.count).to eql 2
       end
     end
   end
   # PUT / PATCH update
  #
- describe "#update" do
-   context "with an existing id and valid data" do
-     let(:new_name) { "BACON" }
-     before { put :update, id: 1, sandwich: sandwich, format: :json }
+  describe "#update" do
+    context "with an existing id and valid data" do
+      let(:new_name) { "bacon" }
+      before { put :update, id: 1, sandwich: sandwich, format: :json }
 
-     it_behaves_like "an success"
+      it_behaves_like "an success"
 
-     it "renders the sandwich" do
-       expect(response.body).to include "BACON"
-       expect(response.body).to include blt_sandwich.bread_type
-     end
+      it "render the sandwich" do
+        expect(response.body).to include new_name
+        expect(response.body).to include blt_sandwich.bread_type
+      end
+    end
 
-     it "does not save a new Sandwich to the database" do
-       expect(Sandwich.count).to eql 2
-     end
-   end
+    context "with an existing id but invalid data" do
+      let(:new_name) { "1" }
+      before { put :update, id: 1, sandwich: sandwich, format: :json }
 
-   context "with an existing id but invalid data" do
-     let(:new_name) { "1" }
-     before { put :update, id: 1, sandwich: sandwich, format: :json }
+      it "render json with code 422" do
+        expect(response.content_type).to eq "application/json"
+        expect(response.code).to eq "422"
+      end
 
-     it "renders json with code 422" do
-       expect(response.content_type).to eq "application/json"
-       expect(response.code).to eq "422"
-     end
+      it "render an error message" do
+        expect(response.body).to include "Name is too short"
+      end
+    end
 
-     it "renders an error message" do
-       expect(response.body).to include "Name is too short"
-     end
-   end
+    context "with a non-existing id" do
+      before { put :update, id: invalid_id, name: "BACON", format: :json }
 
-   context "with a non-existing id" do
-     before { put :update, id: invalid_id, name: "BACON", format: :json }
+      it_behaves_like "an error handler"
+    end
+  end
 
-     it_behaves_like "an error handler"
-   end
- end
+  # DELETE destroy
+  #
+  describe "#destroy" do
+    context "with an existing id" do
+      before { delete :destroy, id: 1, format: :json }
 
- # DELETE destroy
- #
- describe "#destroy" do
-   context "with an existing id" do
-     before { delete :destroy, id: 1, format: :json }
+      it_behaves_like "an success"
 
-     it_behaves_like "an success"
+      it "render the sandwich" do
+        expect(response.body).to include blt_sandwich.name
+        expect(response.body).to include blt_sandwich.bread_type
+      end
+    end
 
-     it "renders the sandwich" do
-       expect(response.body).to include blt_sandwich.name
-       expect(response.body).to include blt_sandwich.bread_type
-     end
+    context "with a non-existing id" do
+      before { put :update, id: invalid_id, name: "bacon", format: :json }
 
-     it "deletes the Sandwich from the database" do
-       expect(Sandwich.count).to eql 1
-     end
-   end
-
-   context "with a non-existing id" do
-     before { put :update, id: invalid_id, name: "BACON", format: :json }
-
-     it_behaves_like "an error handler"
-
-     it "does not delete a random Sandwich from the database" do
-       expect(Sandwich.count).to eql 2
-     end
+      it_behaves_like "an error handler"
     end
   end
 end
