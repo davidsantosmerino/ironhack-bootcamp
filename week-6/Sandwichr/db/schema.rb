@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20160502132453) do
     t.integer  "calories",   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "amount",     default: 0
+    t.float    "amount",     default: 0.0
   end
 
   create_table "sandwich_ingredients", force: :cascade do |t|

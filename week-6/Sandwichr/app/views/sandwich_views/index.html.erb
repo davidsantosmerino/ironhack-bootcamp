@@ -1,0 +1,8 @@
+<div class="row">
+  <% @sandwiches.each do |sandwich| %>
+    <div class="col-md-4" data-sandwich-id="<%= sandwich.id %>">
+      <h3><%= sandwich.name %></h3>
+      <%= link_to "show details", sandwich_path(sandwich)%>
+    </div>
+  <% end %>
+</div>
