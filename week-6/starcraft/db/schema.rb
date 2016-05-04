@@ -27,6 +27,9 @@ ActiveRecord::Schema.define(version: 20160504075918) do
     t.integer  "loser_id"
   end
 
+  add_index "matches", ["loser_id"], name: "index_matches_on_loser_id", using: :btree
+  add_index "matches", ["winner_id"], name: "index_matches_on_winner_id", using: :btree
+
   create_table "players", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
